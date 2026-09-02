@@ -77,7 +77,7 @@ export function Timeline({ groups }: { groups: { year: number; items: Experience
         ))}
 
         {/* The tail. Marks where the record starts rather than just stopping. */}
-        <div className="relative pl-10 pt-6 pb-2 sm:pl-14 lg:pl-20">
+        <div className="relative pl-8 pt-5 pb-2 sm:pl-12 lg:pl-16">
           <span
             aria-hidden="true"
             className="absolute top-[1.9rem] left-0 h-2 w-2 -translate-x-1/2 rounded-full bg-dune"

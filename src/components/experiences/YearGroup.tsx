@@ -32,7 +32,7 @@ export function YearGroup({
 
   return (
     <section aria-labelledby={`year-${year}`} className="relative">
-      <header className="relative pl-10 sm:pl-14 lg:pl-20">
+      <header className="relative pl-8 sm:pl-12 lg:pl-16">
         <span
           aria-hidden="true"
           className="absolute top-1/2 left-0 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-ink"
@@ -42,11 +42,11 @@ export function YearGroup({
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls={panelId}
-          className="group flex w-full items-baseline gap-4 py-6 text-left"
+          className="group flex w-full items-baseline gap-3 py-3 text-left"
         >
           <h2
             id={`year-${year}`}
-            className="display-face text-[clamp(2.25rem,6vw,4.5rem)] leading-none tracking-tight text-ink transition-colors group-hover:text-coral"
+            className="display-face text-[clamp(1.9rem,4.4vw,3.25rem)] leading-none tracking-tight text-ink transition-colors group-hover:text-coral"
           >
             {year}
           </h2>

@@ -9,6 +9,8 @@ type PhotoFrameProps = {
   priority?: boolean;
   /** Short label shown on the empty state, for example "2020, Bindu". */
   slotLabel?: string;
+  /** Collapse the empty state to one line instead of reserving the full box. */
+  compact?: boolean;
 };
 
 /**
@@ -24,6 +26,7 @@ export function PhotoFrame({
   sizes = "(max-width: 768px) 100vw, 40vw",
   priority = false,
   slotLabel,
+  compact = false,
 }: PhotoFrameProps) {
   if (photo.src) {
     return (
@@ -42,6 +45,25 @@ export function PhotoFrame({
           </figcaption>
         ) : null}
       </figure>
+    );
+  }
+
+  // Empty slots used to reserve the full photo footprint, which turned a 27
+  // entry timeline into an enormous page of grey rectangles. They now collapse
+  // to a single labelled line and only take the real footprint once a file
+  // exists. Adding a src is still the only thing needed to fill one.
+  if (compact) {
+    return (
+      <div
+        className="flex items-baseline gap-2 border-l border-dashed border-ocean-soft/50 py-1 pl-3"
+        role="img"
+        aria-label={`Photo slot, not yet filled: ${photo.alt}`}
+      >
+        <span className="text-micro shrink-0 text-ocean-soft">Photo slot</span>
+        <span className="truncate text-xs text-ink-faint">
+          {slotLabel ?? photo.alt}
+        </span>
+      </div>
     );
   }
 

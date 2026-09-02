@@ -36,14 +36,18 @@ export const nav = [
 ] as const;
 
 /**
- * TODO: replace every one of these with real links before launch.
- * The site renders them exactly as written, so a placeholder here ships as a
- * placeholder. Nothing guesses an address on your behalf.
+ * Pulled from the Notion sources, not guessed.
+ *
+ * Email and LinkedIn are the ones Ananya listed herself in the May 2026
+ * website spec. Note that older Notion pages (2023 to 2024) give a different
+ * LinkedIn, linkedin.com/in/ananya-shah-85372918a. The newer handle is used
+ * here because it appears in both 2025 and 2026 sources. Confirm before
+ * launch, it is item C-1 in CONTENT-GAPS.md.
  */
 export const contact = {
-  email: "REPLACE-ME@example.com",
-  linkedin: "https://www.linkedin.com/in/REPLACE-ME",
-  github: "https://github.com/REPLACE-ME",
+  email: "anyushah@gmail.com",
+  linkedin: "https://www.linkedin.com/in/anyushah",
+  github: "https://github.com/Anyueow",
 } as const;
 
 /** TODO: drop the three PDFs into /public/resume and fix the labels. */
