@@ -97,6 +97,7 @@ protocol through Playwright if you need real frame timings.
 | T-3.9 | Timeline performance with 25 entries | TODO | | Currently five entries. Each one mounts its own `useScroll` and `useInView`. At 25 that is 50 scroll subscribers, which may need consolidating into one shared scroll listener. Measure before rewriting. |
 | T-3.10 | Keyboard and screen reader pass | TODO | | Focus order, focus visibility on the year rail and collapsed groups, and whether the aria-hidden tide duplicate is announced anywhere it should not be. |
 | T-3.11 | Cross browser check | TODO | | Safari especially: `mix-blend-difference` on a fixed header, `clip-path` animation on the tide, and CSS columns in the camera roll are the three risky spots. |
+| T-3.13 | Netlify hosting configuration | TODO | | Ananya is hosting the site on Netlify now. `netlify.toml` has build command, publish dir and cache headers already. Needs a look at: custom domain and HTTPS setup in Netlify's own dashboard (not something an agent can do), a `_redirects` or `[[redirects]]` fallback for the static 404 page, and whether `site.url` in `src/content/site.ts` should switch from the `netlify.app` subdomain to the real domain once it exists. |
 
 ---
 
