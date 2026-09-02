@@ -17,12 +17,16 @@ at the end. It is updated **before and after** every task.
 
 **Before you start any task:**
 
-1. Open `HANDOFF.md` and read the whole board. Not just your workstream.
-2. Find the task you intend to do. If it is marked `IN PROGRESS` by another
+1. `git pull --rebase origin main` first, before anything else. Do this every
+   single time, even if you pulled five minutes ago. The board changes
+   underneath you, and a stale `HANDOFF.md` is how two agents claim the same
+   task.
+2. Open `HANDOFF.md` and read the whole board. Not just your workstream.
+3. Find the task you intend to do. If it is marked `IN PROGRESS` by another
    agent, **stop and pick something else**. Do not "help" with a claimed task.
-3. If it is `TODO`, claim it: change the status to `IN PROGRESS`, write your
+4. If it is `TODO`, claim it: change the status to `IN PROGRESS`, write your
    agent id and the UTC timestamp in the Owner column.
-4. Commit that claim on its own, immediately, before writing any code:
+5. Commit that claim on its own, immediately, before writing any code:
    `git commit -m "Claim: T-3.2 responsive audit"` and push. The claim is only
    real once it is pushed. An unpushed claim does not exist to other agents.
 
@@ -47,8 +51,8 @@ at the end. It is updated **before and after** every task.
    up writing the same component. Finish a task, push it, then claim the next
    one.
 
-**Pull before you claim.** `git pull --rebase` first, every time. The board
-changes underneath you.
+**Pull again before you finish**, too, not just before you claim. See the "When
+you finish" section above and the Git loop at the bottom of this file.
 
 ---
 
