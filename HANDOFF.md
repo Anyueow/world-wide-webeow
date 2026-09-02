@@ -68,7 +68,7 @@ result. Do not mark a design task done without looking at it.
 | T-2.8 | Impact card grid and masonry | TODO | | Held until T-2.6 is signed off so the card can inherit the timeline's visual language. Page and data wiring already exist, only the card design is missing. |
 | T-2.9 | Homepage headshot placement | TODO | | Decide whether the real headshot sits on the homepage next to the caricature, or on Who Am I. Depends on T-1.12. |
 | T-2.10 | Dark mode | TODO | | "Optional but nice to have" per the spec. Tokens are already centralised, so this is a token swap plus a toggle, not a rewrite. Lowest priority. |
-| T-2.11 | Favicon and OG image | TODO | | OG currently points at the caricature, which works. A dedicated 1200x630 card would be better. Favicon is still the Next default. |
+| T-2.11 | Favicon and OG image | IN PROGRESS | sonnet-5/session_797907ec, 2026-09-03T00:00Z | OG currently points at the caricature, which works. A dedicated 1200x630 card would be better. Favicon is still the Next default. |
 
 ---
 
