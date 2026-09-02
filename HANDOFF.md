@@ -91,6 +91,7 @@ protocol through Playwright if you need real frame timings.
 | T-3.4 | Sticky year rail bug | DONE | opus-5/014ecdjnxdyE | The nav was a stretched grid item, so it spanned the whole timeline and had nothing to stick to. Fixed with `self-start`. |
 | T-3.5 | Caricature checkerboard bug | DONE | opus-5/014ecdjnxdyE | Source PNG shipped a flattened transparency checkerboard. Converted to real alpha. |
 | T-3.6 | Mobile header wrap bug | DONE | opus-5/014ecdjnxdyE | Brand and nav wrapped to two lines at 390px. Brand collapses to "AS" below `sm`, nav gaps tightened, `whitespace-nowrap` throughout. |
+| T-3.12 | Header colliding with body text | DONE | opus-5/014ecdjnxdyE | A fixed bar with no background sits on body text at some scroll position on every page. Rather than adding a scrim, the header retracts on scroll down and returns on scroll up. Transform only. Always visible in the top 140px and under reduced motion. |
 | T-3.7 | Full responsive audit | TODO | | Every page at 390, 768, 1024, 1440, 2560. The timeline at 768 in particular: it drops to one column there and the alternation stops, needs a look. |
 | T-3.8 | Lighthouse 90+ on all four pages | TODO | | Not yet measured. Run against the built static output, not the dev server. Watch LCP on the hero and CLS on the photo slots. |
 | T-3.9 | Timeline performance with 25 entries | TODO | | Currently five entries. Each one mounts its own `useScroll` and `useInView`. At 25 that is 50 scroll subscribers, which may need consolidating into one shared scroll listener. Measure before rewriting. |
@@ -135,7 +136,7 @@ re-read the spec it is checking against.
 
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| T-4.1 | Verification pass on the prototype | DONE | opus-5/014ecdjnxdyE | Found and fixed 4 bugs: sticky rail, caricature checkerboard, mobile header wrap, chevron direction. Build clean, no page errors, content confirmed in static HTML. |
+| T-4.1 | Verification pass on the prototype | DONE | opus-5/014ecdjnxdyE | Screenshotted 10 views at 1440 and 390. Found and fixed 5 bugs: sticky rail, caricature checkerboard, mobile header wrap, chevron direction, header collision. Build, tsc and lint clean. No page errors. Content confirmed present in `out/experiences/index.html` with h1 to h2 to h3 hierarchy intact. |
 | T-4.2 | Lighthouse baseline | TODO | | First real numbers. Run before anyone optimises anything, so there is something to compare against. |
 | T-4.3 | Verification pass after Impact lands | TODO | | Blocked until T-2.8. |
 | T-4.4 | Pre launch pass | TODO | | The last one before the domain is pointed. Includes checking every outbound link resolves and no `REPLACE-ME` string survives anywhere. |

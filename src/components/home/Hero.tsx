@@ -36,7 +36,7 @@ export function Hero() {
       {/* Caricature. Sits behind the type on large screens. */}
       <motion.div
         style={reduceMotion ? undefined : { y: portraitY, opacity: portraitOpacity }}
-        className="pointer-events-none absolute right-[-6%] bottom-0 -z-10 hidden w-[42vw] max-w-[38rem] lg:block"
+        className="pointer-events-none absolute right-0 bottom-0 -z-10 hidden w-[38vw] max-w-[34rem] lg:block"
       >
         <div className="relative aspect-855/941 w-full">
           <Image

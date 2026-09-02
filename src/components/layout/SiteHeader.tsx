@@ -2,25 +2,47 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { useState } from "react";
 import { nav, site } from "@/content/site";
 
 /**
  * Fixed header over a page that is sand in some places and deep ocean in
  * others.
  *
- * Rather than tracking which section is underneath, the whole bar is set in
- * sand and composited with mix-blend-difference. Over the sand background the
- * difference is near zero, so the type reads as near black. Over the ocean
- * panel it inverts to near white. One line of CSS, no scroll listener, and it
- * cannot fall out of sync with the tide animation.
+ * Two problems, two decisions.
  *
- * Everything inside inherits currentColor for the same reason.
+ * Colour: rather than tracking which section is underneath, the whole bar is
+ * set in sand and composited with mix-blend-difference. Over sand the
+ * difference is near zero, so the type reads as near black. Over the ocean
+ * panel it inverts to near white. No scroll listener to fall out of sync with
+ * the tide animation. Everything inside inherits currentColor for the same
+ * reason.
+ *
+ * Collision: a fixed bar with no background will sit on top of body text at
+ * some scroll position on every page. Rather than covering the page with a
+ * scrim, the header gets out of the way. It retracts once you scroll down past
+ * it and returns the moment you scroll up, which is when someone actually
+ * wants navigation. Transform only, so it costs nothing.
  */
 export function SiteHeader() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (current) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    // Always visible near the top, otherwise follow scroll direction.
+    setHidden(current > 140 && current > previous);
+  });
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 text-sand mix-blend-difference">
+    <motion.header
+      className="fixed inset-x-0 top-0 z-30 text-sand mix-blend-difference"
+      animate={reduceMotion ? undefined : { y: hidden ? "-115%" : "0%" }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="mx-auto flex w-full max-w-[104rem] items-center justify-between gap-4 px-6 py-5 sm:px-10 lg:px-14">
         <Link
           href="/"
@@ -60,6 +82,6 @@ export function SiteHeader() {
           </ul>
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 }
