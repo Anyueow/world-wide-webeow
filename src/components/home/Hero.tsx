@@ -38,7 +38,7 @@ export function Hero() {
         style={reduceMotion ? undefined : { y: portraitY, opacity: portraitOpacity }}
         className="pointer-events-none absolute right-[-6%] bottom-0 -z-10 hidden w-[42vw] max-w-[38rem] lg:block"
       >
-        <div className="relative aspect-9/10 w-full">
+        <div className="relative aspect-855/941 w-full">
           <Image
             src="/images/ananya-caricature.png"
             alt=""
@@ -46,8 +46,7 @@ export function Hero() {
             fill
             priority
             sizes="42vw"
-            style={{ objectPosition: "47% 50%" }}
-            className="object-cover mix-blend-multiply"
+            className="object-contain"
           />
         </div>
       </motion.div>
@@ -88,15 +87,14 @@ export function Hero() {
         </p>
 
         {/* Caricature on small screens, where there is no room beside the type. */}
-        <div className="relative mx-auto mt-10 aspect-9/10 w-[62%] max-w-xs lg:hidden">
+        <div className="relative mx-auto mt-10 aspect-855/941 w-[62%] max-w-xs lg:hidden">
           <Image
             src="/images/ananya-caricature.png"
             alt="Illustrated portrait of Ananya Shah at a laptop, giving a thumbs up"
             fill
             priority
             sizes="(max-width: 1024px) 62vw, 0px"
-            style={{ objectPosition: "47% 50%" }}
-            className="object-cover mix-blend-multiply"
+            className="object-contain"
           />
         </div>
       </Container>

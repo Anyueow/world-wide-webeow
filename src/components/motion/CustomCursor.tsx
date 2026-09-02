@@ -8,11 +8,13 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-moti
  * interactive. It does not replace the system cursor, it sits behind it, so
  * nothing about clicking or text selection changes.
  *
- * Off entirely on touch devices, coarse pointers and under reduced motion.
+ * Touch and coarse pointer devices never see it: `.custom-cursor-root` is
+ * display:none under `(pointer: coarse)` in globals.css. That is handled in CSS
+ * rather than JavaScript so there is no state to set on mount and no chance of
+ * a hydration mismatch. Reduced motion drops the component entirely.
  */
 export function CustomCursor() {
   const reduceMotion = useReducedMotion();
-  const [enabled, setEnabled] = useState(false);
   const [hot, setHot] = useState(false);
 
   const x = useMotionValue(-100);
@@ -23,8 +25,6 @@ export function CustomCursor() {
   useEffect(() => {
     if (reduceMotion) return;
     if (!window.matchMedia("(pointer: fine)").matches) return;
-
-    setEnabled(true);
 
     const move = (event: PointerEvent) => {
       x.set(event.clientX);
@@ -38,7 +38,7 @@ export function CustomCursor() {
     return () => window.removeEventListener("pointermove", move);
   }, [reduceMotion, x, y]);
 
-  if (!enabled) return null;
+  if (reduceMotion) return null;
 
   return (
     <motion.div

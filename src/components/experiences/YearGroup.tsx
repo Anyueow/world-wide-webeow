@@ -56,7 +56,7 @@ export function YearGroup({
           <span
             aria-hidden="true"
             className={`ml-auto text-ink-faint transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              open ? "rotate-180" : "rotate-0"
+              open ? "rotate-0" : "rotate-180"
             }`}
           >
             &#8593;

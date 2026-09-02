@@ -42,7 +42,14 @@ export function Timeline({ groups }: { groups: { year: number; items: Experience
     restDelta: 0.001,
   });
 
-  let runningIndex = 0;
+  // Entries alternate which side the photo sits on, and the alternation has to
+  // continue across year boundaries rather than restarting at each year. So
+  // each group needs to know how many entries came before it. Derived up front
+  // rather than accumulated during render.
+  const offsets = groups.reduce<number[]>((acc, group, index) => {
+    acc.push(index === 0 ? 0 : acc[index - 1] + groups[index - 1].items.length);
+    return acc;
+  }, []);
 
   return (
     <div className="grid gap-10 lg:grid-cols-[7rem_1fr] lg:gap-16">
@@ -60,18 +67,14 @@ export function Timeline({ groups }: { groups: { year: number; items: Experience
           />
         </div>
 
-        {groups.map((group) => {
-          const startIndex = runningIndex;
-          runningIndex += group.items.length;
-          return (
-            <YearGroup
-              key={group.year}
-              year={group.year}
-              items={group.items}
-              startIndex={startIndex}
-            />
-          );
-        })}
+        {groups.map((group, index) => (
+          <YearGroup
+            key={group.year}
+            year={group.year}
+            items={group.items}
+            startIndex={offsets[index]}
+          />
+        ))}
 
         {/* The tail. Marks where the record starts rather than just stopping. */}
         <div className="relative pl-10 pt-6 pb-2 sm:pl-14 lg:pl-20">

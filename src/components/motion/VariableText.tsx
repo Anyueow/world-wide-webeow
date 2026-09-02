@@ -7,24 +7,30 @@ import {
   useReducedMotion,
   animate,
 } from "framer-motion";
-import { useEffect, useState, type ElementType, type ReactNode } from "react";
+import { useEffect, type ElementType, type ReactNode } from "react";
+
+type Axes = { soft: number; wonk: number; wght: number; opsz: number };
 
 type VariableTextProps = {
   children: ReactNode;
   className?: string;
   as?: ElementType;
-  /** Fraunces axis values at rest. */
-  from?: { soft: number; wonk: number; wght: number; opsz: number };
-  /** Fraunces axis values at the end of the entrance, and on hover. */
-  to?: { soft: number; wonk: number; wght: number; opsz: number };
+  /** Fraunces axis values the text starts at. */
+  from?: Axes;
+  /** Fraunces axis values it settles on, and toggles to on hover. */
+  to?: Axes;
   /** Seconds before the entrance animation starts. */
   delay?: number;
   /** Re-run the axis animation on pointer enter. */
   hoverable?: boolean;
 };
 
-const REST = { soft: 0, wonk: 0, wght: 400, opsz: 96 };
-const WONKY = { soft: 70, wonk: 1, wght: 500, opsz: 144 };
+const REST: Axes = { soft: 0, wonk: 0, wght: 400, opsz: 96 };
+const WONKY: Axes = { soft: 70, wonk: 1, wght: 500, opsz: 144 };
+
+function settle(axes: Axes) {
+  return `"SOFT" ${axes.soft}, "WONK" ${axes.wonk}, "opsz" ${axes.opsz}, "wght" ${axes.wght}`;
+}
 
 /**
  * Animates Fraunces' variable axes rather than position or opacity.
@@ -32,8 +38,11 @@ const WONKY = { soft: 70, wonk: 1, wght: 500, opsz: 144 };
  * This is the site's signature move. SOFT rounds the terminals and WONK
  * unbends the serifs, so the type physically loosens up as you arrive on the
  * page. It is text the whole time: real characters, real font, selectable,
- * crawlable, and it never moves in layout, so it cannot cause a shift or
- * delay largest contentful paint.
+ * crawlable, and it never moves in layout, so it cannot cause a shift or delay
+ * largest contentful paint.
+ *
+ * If JavaScript never runs, the text renders at the `from` axes, which is plain
+ * Fraunces. Nothing is hidden waiting on an animation.
  */
 export function VariableText({
   children,
@@ -45,7 +54,6 @@ export function VariableText({
   hoverable = true,
 }: VariableTextProps) {
   const reduceMotion = useReducedMotion();
-  const [ready, setReady] = useState(false);
 
   const soft = useMotionValue(from.soft);
   const wonk = useMotionValue(from.wonk);
@@ -56,7 +64,6 @@ export function VariableText({
 
   useEffect(() => {
     if (reduceMotion) return;
-    setReady(true);
 
     const options = { duration: 1.4, delay, ease: [0.22, 1, 0.36, 1] as const };
     const runs = [
@@ -69,23 +76,18 @@ export function VariableText({
     return () => runs.forEach((run) => run.stop());
   }, [reduceMotion, delay, to.soft, to.wonk, to.wght, to.opsz, soft, wonk, wght, opsz]);
 
-  const MotionTag = motion[as as "span"];
-
-  // Reduced motion, and the server render, get the settled state with no
-  // animation. The text looks finished rather than mid transition.
-  if (reduceMotion || !ready) {
+  // Reduced motion gets the settled state immediately, with no animation and
+  // no motion component at all.
+  if (reduceMotion) {
     const Tag = as;
     return (
-      <Tag
-        className={className}
-        style={{
-          fontVariationSettings: `"SOFT" ${to.soft}, "WONK" ${to.wonk}, "opsz" ${to.opsz}, "wght" ${to.wght}`,
-        }}
-      >
+      <Tag className={className} style={{ fontVariationSettings: settle(to) }}>
         {children}
       </Tag>
     );
   }
+
+  const MotionTag = motion[as as "span"];
 
   const wobble = () => {
     if (!hoverable) return;

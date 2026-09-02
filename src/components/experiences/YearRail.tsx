@@ -40,7 +40,13 @@ export function YearRail({ years }: { years: number[] }) {
   }, [years]);
 
   return (
-    <nav aria-label="Jump to year" className="sticky top-28 hidden lg:block">
+    // self-start matters. As a stretched grid item the nav would be as tall as
+    // the entire timeline, and a sticky element that already spans its
+    // container has nothing to stick to, so the list would scroll away.
+    <nav
+      aria-label="Jump to year"
+      className="sticky top-28 hidden self-start lg:block"
+    >
       <p className="text-micro mb-4 text-ink-faint">Years</p>
       <ul className="space-y-1.5">
         {years.map((year) => {
