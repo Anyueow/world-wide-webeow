@@ -12,6 +12,7 @@ Last updated: 2026-09-02, by `opus-5/session_014ecdjnxdyE`
 | `IN PROGRESS` | Claimed. Owner and claim time are filled in. Hands off. |
 | `BLOCKED` | Waiting on Ananya or on another task. Blocker named in Notes. |
 | `DONE` | Built, verified, pushed. Notes say what and where. |
+| `NEEDS REWORK` | Built, but Ananya rejected it. Do not rebuild without her specifics. |
 
 ---
 
@@ -35,9 +36,9 @@ copy in a component.
 | T-1.3 | Draft homepage bio and tagline options | DONE | opus-5/014ecdjnxdyE | `src/content/site.ts`. Marked DRAFT. Tagline locked to "curiouser, curiouser" by Ananya. Bio is 3 lines, unapproved. |
 | T-1.4 | Draft Who Am I copy, camera roll captions, Pacifica passage | DONE | opus-5/014ecdjnxdyE | `src/content/camera-roll.ts` and inline in `PacificaTide.tsx`. All marked DRAFT. |
 | T-1.5 | Five prototype experience entries | DONE | opus-5/014ecdjnxdyE | `src/content/experiences.ts`. Enterpi 2018, Bindu 2020, FindHer 2023, Cartesian 2025, Leprechaun 2026. Real data from Notion. |
-| T-1.6 | Remaining ~20 experience entries | BLOCKED | | Blocked on Ananya approving the timeline interaction (T-2.6). Source data already in the Notion spec, so this is transcription, not research. Entries listed in the header comment of `experiences.ts`. |
-| T-1.7 | Impact entries with real URLs | BLOCKED | | Blocked on Ananya supplying links. Source list is in the header comment of `src/content/impact.ts`. Papers, repos, Figma files, Airtable MVPs, the AI Runtime talk. |
-| T-1.8 | Real contact links | BLOCKED | | Blocked on Ananya. `src/content/site.ts` currently ships `REPLACE-ME` placeholders on purpose. Do not guess a LinkedIn or GitHub URL. |
+| T-1.6 | Full experience timeline | NEEDS REWORK | opus-5/014ecdjnxdyE | Built 29 entries, 2015 to 2026, from all seven Notion source pages. **Ananya says the information is wrong.** Waiting on specifics before touching it again. Do not re-derive from Notion, the Notion sources conflict with each other and may all be stale. |
+| T-1.7 | Impact entries with real URLs | DONE | opus-5/014ecdjnxdyE | 10 artifacts in `src/content/impact.ts` with real URLs found in Notion: Vera, flood risk, FindHer, Sandcastles, the Sherman Airtable, HAN, GitHub, plus two Drive docs. Items with no public URL are listed in `/CONTENT-GAPS.md` section B, not faked into cards. |
+| T-1.8 | Real contact links | BLOCKED | | Partially done. GitHub confirmed `github.com/Anyueow`. Email and LinkedIn taken from Ananya's own May 2026 Notion spec but **unverified**, and two different LinkedIn handles exist in Notion. Source of truth is ananya-personal.netlify.app, which **the egress proxy blocks from this environment**, so an agent cannot check it. Ananya must paste them. See CONTENT-GAPS.md A-5 and C-1. |
 | T-1.9 | Three resume PDFs | BLOCKED | | Blocked on Ananya. Drop into `/public/resume/`, filenames already referenced in `site.ts`. Contact page checks the filesystem at build and only shows a link if the file exists. |
 | T-1.10 | Camera roll photos | BLOCKED | | Blocked on Ananya. 9 labelled slots in `src/content/camera-roll.ts`. Add a `src` to a slot, that is the whole job. |
 | T-1.11 | Experience photos | BLOCKED | | Blocked on Ananya. One slot per entry, `photo.note` says what belongs there. |
@@ -92,6 +93,7 @@ protocol through Playwright if you need real frame timings.
 | T-3.5 | Caricature checkerboard bug | DONE | opus-5/014ecdjnxdyE | Source PNG shipped a flattened transparency checkerboard. Converted to real alpha. |
 | T-3.6 | Mobile header wrap bug | DONE | opus-5/014ecdjnxdyE | Brand and nav wrapped to two lines at 390px. Brand collapses to "AS" below `sm`, nav gaps tightened, `whitespace-nowrap` throughout. |
 | T-3.12 | Header colliding with body text | DONE | opus-5/014ecdjnxdyE | A fixed bar with no background sits on body text at some scroll position on every page. Rather than adding a scrim, the header retracts on scroll down and returns on scroll up. Transform only. Always visible in the top 140px and under reduced motion. |
+| T-3.14 | Timeline render cost at 29 entries | DONE | opus-5/014ecdjnxdyE | Page was ~35,000px of grey placeholder boxes. Empty photo slots now collapse to one line, parallax subscribers only mount for entries that have a real photo, and entries carry `content-visibility: auto` with an intrinsic size so off screen entries skip layout and paint. Down to 15,500px, ~1.0s load. |
 | T-3.7 | Full responsive audit | TODO | | Every page at 390, 768, 1024, 1440, 2560. The timeline at 768 in particular: it drops to one column there and the alternation stops, needs a look. |
 | T-3.8 | Lighthouse 90+ on all four pages | TODO | | Not yet measured. Run against the built static output, not the dev server. Watch LCP on the hero and CLS on the photo slots. |
 | T-3.9 | Timeline performance with 25 entries | TODO | | Currently five entries. Each one mounts its own `useScroll` and `useInView`. At 25 that is 50 scroll subscribers, which may need consolidating into one shared scroll listener. Measure before rewriting. |
