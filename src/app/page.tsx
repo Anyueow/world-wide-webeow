@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { Hero } from "@/components/home/Hero";
+import { GameBoard } from "@/components/game/GameBoard";
 import { Reveal } from "@/components/motion/Reveal";
 import { VariableText } from "@/components/motion/VariableText";
 import { Timeline } from "@/components/experiences/Timeline";
@@ -120,6 +121,28 @@ export default function HomePage() {
                 </div>
               </Reveal>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section
+        id="game"
+        aria-labelledby="game-heading"
+        className="scroll-mt-24 border-t border-dune py-24"
+      >
+        <Container width="wide">
+          <p className="text-micro text-ocean-soft">Two truths and a lie</p>
+          <h2 id="game-heading" className="mt-6 max-w-[16ch]">
+            <VariableText as="span" className="display-face text-display block text-ink">
+              Click what is her
+            </VariableText>
+          </h2>
+          <p className="text-lede mt-6 max-w-[52ch] text-ink-soft">
+            A few of these are real. A few are not. Collect the real ones.
+          </p>
+
+          <div className="mt-12">
+            <GameBoard />
           </div>
         </Container>
       </section>
