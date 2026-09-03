@@ -16,6 +16,30 @@
   [headers.values]
     Cache-Control = "public, max-age=604800, must-revalidate"
 
+# next/og metadata routes emit real PNGs at extensionless paths: out/icon,
+# out/apple-icon, out/opengraph-image. Netlify infers Content-Type from the
+# file extension, so with none it serves application/octet-stream. Browsers
+# get an unreliable favicon and, worse, LinkedIn and Slack silently refuse to
+# render the share card. These three headers are what make the OG image
+# actually appear when the link is shared.
+[[headers]]
+  for = "/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+  for = "/icon"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+  for = "/apple-icon"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
 [[headers]]
   for = "/*"
   [headers.values]
