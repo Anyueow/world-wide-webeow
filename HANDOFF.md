@@ -37,7 +37,29 @@ quarantined until Workstream 0 replaces it wholesale.
 
 ---
 
-# Workstream 0: Truth and story
+# FOR AN AGENT WITHOUT THE NOTION CONNECTOR
+
+Everything in **Workstream G** is yours. None of it needs Notion. The blocking
+research is done far enough that the game can be built now:
+
+- `src/lib/game-types.ts` is the contract. Read it first.
+- `src/content/game-items.ts` has 11 true items and 3 decoys, already written,
+  already sourced, with pixel art authored as data.
+- `src/components/game/PixelIcon.tsx` renders a grid to SVG. It works. Use it.
+
+So the game board, the basket, the collection animation, the scorecard, the
+single page collapse, mobile and accessibility are all unblocked. Claim
+T-G.1 through T-G.9 and go.
+
+**Do not** touch `src/content/experiences.ts` or `src/content/impact.ts`. Those
+are quarantined rejected content and rebuilding them needs Notion plus Ananya.
+
+Tasks are tagged `[no-notion]` or `[needs-notion]` below.
+
+
+---
+
+# Workstream 0: Truth and story `[needs-notion]`
 
 **This blocks everything else. Nothing that renders a fact about Ananya should
 be built until this lands.**
@@ -70,9 +92,9 @@ ledger and biography. `AskUserQuestion` for the interview. Do **not** use
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
 | T-0.1 | Quarantine the rejected content | DONE | opus-5/014ecdjnxdyE | Warning headers added to `src/content/experiences.ts` and `impact.ts` telling any agent the data is rejected and not to build on it. |
-| T-0.2 | Enumerate every Notion page, do not sample | IN PROGRESS | opus-5/014ecdjnxdyE, 2026-09-03T05:10Z | Not just the 7 named in the master spec. Sweep: every page tagged `ananya 101` in Life in Pages, every project sub-page (Bindu, FoundHer/FindHer, Fitness Bolt, E-Cup, Social Frame, Likd by Anyu, Dogspotted), Academics for the research work, and the Leprechaun knowledge base. Use `mcp__Notion__search` with an empty query plus a teamspace or date filter to LIST pages, since semantic search silently misses things. Output: a checklist of every page URL with a read/not-read box, committed as `research/notion-index.md`. |
-| T-0.3 | Build the fact ledger | IN PROGRESS | opus-5/014ecdjnxdyE, 2026-09-03T05:10Z | Blocked on T-0.2. One row per atomic claim: the claim, every source that states it, every source that contradicts it, and a confidence of `confirmed` / `single-source` / `CONFLICT`. Commit as `research/fact-ledger.md`. This is the artifact that makes the next agent unable to repeat the mistake. Expect 150+ rows. Known conflicts to resolve, do not silently pick: HAN title by year, Bindu reach (7,000 vs 8,000), Zero Clix and Tyle start years, Sherman Center end date, FindHer vs FoundHer naming, which LinkedIn handle. |
-| T-0.4 | Interview Ananya | TODO | | Blocked on T-0.3. **She chose this over supplying a resume, so it is the primary input, not a formality.** Two halves. (a) Every `CONFLICT` row, asked as a specific closed question she can answer in three words. (b) The autobiography questions, which are in no Notion page and cannot be derived: what is her core, who is she when nothing is being measured, what actually drives her, what is she avoiding, what does she want people to be wrong about. Use `AskUserQuestion` in batches of 4, not one giant wall. |
+| T-0.2 | Enumerate every Notion page, do not sample | DONE | opus-5/014ecdjnxdyE | Not just the 7 named in the master spec. Sweep: every page tagged `ananya 101` in Life in Pages, every project sub-page (Bindu, FoundHer/FindHer, Fitness Bolt, E-Cup, Social Frame, Likd by Anyu, Dogspotted), Academics for the research work, and the Leprechaun knowledge base. Use `mcp__Notion__search` with an empty query plus a teamspace or date filter to LIST pages, since semantic search silently misses things. Output: a checklist of every page URL with a read/not-read box, committed as `research/notion-index.md`. |
+| T-0.3 | Build the fact ledger | IN PROGRESS | opus-5/014ecdjnxdyE | Blocked on T-0.2. One row per atomic claim: the claim, every source that states it, every source that contradicts it, and a confidence of `confirmed` / `single-source` / `CONFLICT`. Commit as `research/fact-ledger.md`. This is the artifact that makes the next agent unable to repeat the mistake. Expect 150+ rows. Known conflicts to resolve, do not silently pick: HAN title by year, Bindu reach (7,000 vs 8,000), Zero Clix and Tyle start years, Sherman Center end date, FindHer vs FoundHer naming, which LinkedIn handle. |
+| T-0.4 | Interview Ananya | IN PROGRESS | opus-5/014ecdjnxdyE | Blocked on T-0.3. **She chose this over supplying a resume, so it is the primary input, not a formality.** Two halves. (a) Every `CONFLICT` row, asked as a specific closed question she can answer in three words. (b) The autobiography questions, which are in no Notion page and cannot be derived: what is her core, who is she when nothing is being measured, what actually drives her, what is she avoiding, what does she want people to be wrong about. Use `AskUserQuestion` in batches of 4, not one giant wall. |
 | T-0.5 | Write the biography | TODO | | Blocked on T-0.4. `research/BIOGRAPHY.md`. Not website copy. The long, honest read: origin, the through-line, the contradictions, the drivers, what the pattern across 2015 to 2026 actually says about her. Written as if for a book, so that everything the site says can be traced back to a paragraph here. Ananya's framing: "read and study me like you're writing my autobiography." |
 | T-0.6 | Frame the story | TODO | | Blocked on T-0.5. One page: the thesis of the site in a sentence, the three beats it moves through, and the specific reason each game symbol is in the game. This is what makes the game mean something rather than being a novelty. Commit as `research/story-frame.md`. |
 | T-0.7 | Rebuild the content files from the ledger | TODO | | Blocked on T-0.6. Rewrite `src/content/*` from scratch. **Every fact must carry a `source` field pointing at its ledger row.** A fact with no ledger row does not ship. |
@@ -80,7 +102,7 @@ ledger and biography. `AskUserQuestion` for the interview. Do **not** use
 
 ---
 
-# Workstream G: The single page game
+# Workstream G: The single page game `[no-notion]`
 
 **The concept, in Ananya's words:** "turn the website into a quick game where
 users have to click on pixelated icons of things that represent me best or
@@ -111,10 +133,10 @@ and 1440, and `Read` on the PNGs, because a game cannot be judged from source.
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
 | T-G.1 | Collapse to a single page | IN PROGRESS | sonnet-5/session_797907ec, 2026-09-03T00:30Z | Delete the `/who-am-i`, `/experiences`, `/impact` and `/contact` routes. One `/` that scrolls. Nav becomes in-page anchors or disappears entirely. Keep `sitemap.ts` and `robots.ts`, point them at `/` only. This alone deletes a lot of code, which is most of what "simplify the shit out of it" means. |
-| T-G.2 | Pixel icon system | TODO | | ~24 icons. **Author them as data, not image files:** each icon is a small grid (16x16) of palette indices in a typed array, rendered to inline SVG rects. Reasons: no external assets to load, infinitely scalable, recolours with the palette tokens, and Ananya can add an item by adding one row. Put the type in `src/lib/types.ts` and the icons in `src/content/icons.ts`. Needs a tiny authoring note in the file header so the next person can draw one. |
-| T-G.3 | The game board | TODO | | Blocked on T-0.6 for which symbols are real, and T-G.2 for the icons. Scattered field of icons, click to collect. Real items and decoys mixed. Decoys are the "lie" in two truths and a lie. **A decoy click must be fun, not punishing:** it should reveal why it is *not* her, which is its own kind of characterisation. Keyboard operable, real `<button>` elements, each with an accessible name. |
+| T-G.2 | Pixel icon system | DONE | opus-5/014ecdjnxdyE | ~24 icons. **Author them as data, not image files:** each icon is a small grid (16x16) of palette indices in a typed array, rendered to inline SVG rects. Reasons: no external assets to load, infinitely scalable, recolours with the palette tokens, and Ananya can add an item by adding one row. Landed as `src/lib/game-types.ts`, `src/content/game-items.ts` and `src/components/game/PixelIcon.tsx`. 14 icons drawn and visually verified, not assumed. Authoring note is in the file header. |
+| T-G.3 | The game board | TODO | | **UNBLOCKED.** Symbols and icons now exist in `src/content/game-items.ts`. Scattered field of icons, click to collect. Real items and decoys mixed. Decoys are the "lie" in two truths and a lie. **A decoy click must be fun, not punishing:** it should reveal why it is *not* her, which is its own kind of characterisation. Keyboard operable, real `<button>` elements, each with an accessible name. |
 | T-G.4 | Basket and collection animation | TODO | | Bottom right. Collected icon flies from where it was clicked into the basket and lands. Transform and opacity only. Basket shows a count and can be opened to see what is inside. Must degrade to an instant state change under `prefers-reduced-motion`. |
-| T-G.5 | Hovering scorecard | TODO | | Shows what the player has unlocked: which symbols they got right, which were decoys, and for each real one, the short piece of Ananya it reveals and why that symbol matters to her. **This is where the biography surfaces, so it is the most important writing on the site.** Blocked on T-0.5. |
+| T-G.5 | Hovering scorecard | TODO | | **UNBLOCKED.** Reveal copy is written per item in `game-items.ts`, marked draft. Shows what the player has unlocked: which symbols they got right, which were decoys, and for each real one, the short piece of Ananya it reveals and why that symbol matters to her. **This is where the biography surfaces, so it is the most important writing on the site.** Blocked on T-0.5. |
 | T-G.6 | Reveal-all escape hatch | TODO | | A quiet, always visible control that dumps the whole story without playing. Non negotiable for the recruiter case and it costs almost nothing. Also the fallback when JavaScript fails. |
 | T-G.7 | The scrolling document underneath | TODO | | The real content as one honest scroll: the story, the work, the proof, how to reach her. Radically simpler than the four pages it replaces. Every fact in the server rendered HTML, so the game never gates what Google can read. Blocked on T-0.7. |
 | T-G.8 | Mobile | TODO | | 390px is the real target, since recruiters check on phones. Tap targets at least 44px, basket must not cover content, scorecard becomes a sheet rather than a hover. Hover does not exist on touch, so every hover affordance needs a tap equivalent. |

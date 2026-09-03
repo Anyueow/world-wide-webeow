@@ -103,6 +103,33 @@ its own sake."
 Needs Ananya's confirmation before it becomes the spine of the site. It is
 `single-source` and it was written *about* her by a model, not *by* her.
 
+---
+
+## ANANYA DIRECT. Top of the source hierarchy. Beats every Notion page.
+
+Answered in conversation, 2026-09-03.
+
+| # | Fact | Supersedes |
+| --- | --- | --- |
+| A-1 | **Cartesian title is "Strategy and Data Analyst".** | Resolves X-1. `RC` said Data Consultant, `MD` said Analyst. Neither was right. |
+| A-2 | **FindHer was a jobs platform for women.** Not consumer safety. | Resolves X-2. `MD` is wrong on this. |
+| A-3 | **Game decoys are obvious jokes, not near-misses.** | Design decision. Keeps the tone light. |
+| A-4 | **On her core, in her own words:** "i dont know what the answer is honestly. its just i love community and bringing people together and having deep conversation and helping solve problems" | Supersedes the Ananya.md thesis in the STORY section above. |
+
+### Why A-4 is the thesis
+
+She said she did not know the answer, and then gave it. Four things, in her own
+order: community, bringing people together, deep conversation, solving problems.
+
+That is not "parallel builder who refuses to pick", which is what a model wrote
+about her. Parallel building is the **symptom**. The ventures, the angel
+network, the AI Collective chapter, the 75 person team at Bindu, the dinner
+table: every one of them is a room full of people she assembled around a
+problem. She does not collect job titles, she collects rooms.
+
+Use her words. Do not upgrade them into something more polished, and do not
+put the phrase "parallel builder" on the site.
+
 ## GAPS Ananya.md itself flags
 
 Her own archetype doc marks these ⚠️ MORE INFO NEEDED, which makes them the
