@@ -56,6 +56,31 @@ you finish" section above and the Git loop at the bottom of this file.
 
 ---
 
+## 1a. Anything Ananya tells you is invisible to every other agent
+
+This is the rule that gets broken most, and it is the expensive one.
+
+When Ananya gives you an instruction, a correction, or a design description in
+your session, **no other agent can see it**. Not the next one, not the one
+running in parallel right now. Your chat history is not shared state. The board
+is the only shared state there is.
+
+So: **write it to `HANDOFF.md` before you act on it**, in her words, quoted.
+Then push. Only then start building.
+
+This has already cost the project once. Ananya described the animation she
+wanted for the game symbols to one agent. That agent built from it without
+recording it. A second agent, reading the board, built the symbol set against a
+spec that said "scattered field of icons" and had no idea a specific animation
+had been asked for. Both agents were following the board. The board was wrong,
+because a real instruction never reached it.
+
+If she corrects you, that correction is now a fact about the project. Facts
+about the project live in `HANDOFF.md`, not in your context window.
+
+
+---
+
 ## 2. What "documented" means
 
 Every completed task must leave behind enough that a fresh agent with no
