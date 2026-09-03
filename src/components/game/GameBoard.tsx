@@ -4,7 +4,6 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { PixelIcon } from "@/components/game/PixelIcon";
 import { gameItems, trueItemCount } from "@/content/game-items";
-import { loadCollectedIds, saveCollectedIds } from "@/lib/game-storage";
 
 /**
  * Small deterministic hash so each icon gets a stable tilt and offset from its

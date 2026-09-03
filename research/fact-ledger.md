@@ -14,6 +14,8 @@ Sources fetched so far, by short code:
 | `OVER` | Comprehensive Overview | 2024-07-11 |
 | `SITE23` | Ananya Shah, original site page | 2023-09-02 |
 | `PAPER` | LoRA-Light Debiasing final paper | 2025-04-23 |
+| `ABOUT24` | About me, copy deliverable, her own drafting | 2024-09-05 |
+| `ODYSSEY` | Odyssey Planning with Anand Kaka | 2025-11-21 |
 
 Not yet fetched, so not yet a source: everything unticked in
 `notion-index.md`. That is most of Tier 1 and all of Tier 4.
@@ -83,6 +85,9 @@ Not yet fetched, so not yet a source: everything unticked in
 | A Book Upon a Star, founded Dec 2015 to Dec 2017 | `OVER` |
 | Charter work: Mar 2026 fiber TC spike, 144% CRQ ramp, RPD vendor, optical contamination Pareto | `MD` |
 | Context Maxing, mycelium metaphor, three pillars, AI Runtime 16 Jun 2026 | `MD`, `SPEC26` |
+| Trained for the Lisbon marathon, October 2024 | `ABOUT24` |
+| Rock climbing, swimming, hiking as well as running | `ABOUT24` |
+| Caught her own third-person AI-slop draft and wrote "reduce third person, and less passive voice" | `ABOUT24` |
 
 ## STORY. The through-line, per the one page that states it.
 
@@ -117,6 +122,17 @@ Answered in conversation, 2026-09-03.
 | A-3 | **Game decoys are obvious jokes, not near-misses.** | Design decision. Keeps the tone light. |
 | A-4 | **On her core, in her own words:** "i dont know what the answer is honestly. its just i love community and bringing people together and having deep conversation and helping solve problems" | Supersedes the Ananya.md thesis in the STORY section above. |
 
+### A-4 is corroborated by her own 2024 writing
+
+`ABOUT24`, written two years earlier for a job introduction with nobody asking
+her about identity, says what excites her is "the chance to collaborate with a
+driven team, bringing diverse skillsets together to create something greater
+than the sum of its parts."
+
+Same claim as A-4, unprompted, two years apart. This moves the thesis from
+`single-source` to `confirmed`. It is the one thing about her that two
+independent sources state in nearly the same words, and one of them is her.
+
 ### Why A-4 is the thesis
 
 She said she did not know the answer, and then gave it. Four things, in her own
@@ -141,3 +157,21 @@ interview agenda rather than something to infer:
 - Hometown detail, family and cultural background, languages
 - Chronotype, routine, how she handles stress and rest
 - Which resume track she actually wants, comp, location, timeline
+
+
+---
+
+## SENSITIVE. Read, deliberately excluded from the repo and the site.
+
+`ODYSSEY` and the finance-tagged pages contain salary, net worth, savings rate,
+visa strategy and graduate school ambitions, plus a blunt assessment of her
+financial trajectory.
+
+They informed section 7 of `BIOGRAPHY.md`, which describes the *shape* of the
+pressure she is under. **No figure, visa mechanism or school name from those
+pages appears in any committed file**, because this repository is version
+controlled and those details do not belong in git history, let alone on a
+public website.
+
+If Ananya wants any of it used, that is her call to make explicitly. Do not
+infer permission from the fact that the pages exist.

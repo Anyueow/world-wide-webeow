@@ -24,16 +24,16 @@ Legend: `[x]` fetched in full. `[ ]` not read. `[-]` deliberately out of scope.
 The autobiography material. These answer core, drivers and contradictions,
 which no resume or spec page contains. **Highest value for T-0.5.**
 
-- [ ] Ananya.md, the comprehensive archetype, 2026-06-14
+- [x] Ananya.md, the comprehensive archetype, 2026-06-14
       https://app.notion.com/37fa89f93af381669cddd18f8a2dd886
       **Never actually fetched in the first pass despite being cited. Read first.**
-- [ ] Odyssey Planning with Anand Kaka, 2025-11-21
+- [x] Odyssey Planning with Anand Kaka, SENSITIVE, see ledger, 2025-11-21
       https://app.notion.com/2b2a89f93af380dc958ccab0cda6209b
 - [ ] Ananya Shah's 10 Year plan, 2023-10-08
       https://app.notion.com/7557237608304100924b14d06ab60e0f
 - [ ] 5 month Plan, 2025-11-23
       https://app.notion.com/2b5a89f93af380528b88eff9c3840089
-- [ ] About me, copy deliverable, 2024-09-05
+- [x] About me, copy deliverable, 2024-09-05
       https://app.notion.com/48f3924589304e8ab294a10e71b3e424
 - [ ] Clarity with Natalie, 2026-02-27
       https://app.notion.com/315a89f93af38014869eedf6907f0b1e
@@ -69,7 +69,7 @@ the biography, not on the site.
       https://app.notion.com/526457796f7546a7be1e0f172069c77f
 - [x] Ananya Shah, original site page, 2023-09-02
       https://app.notion.com/b29cd6cba2854bcf8f2ea69d8f114b9e
-- [ ] Ananya Shah, Personal Reference Card, undated
+- [x] Ananya Shah, Personal Reference Card, undated
       https://app.notion.com/247a89f93af3810085b2e316bb6d66c7
       **Cited in the first pass, never fetched.**
 - [ ] Ananya Portfolio, undated
