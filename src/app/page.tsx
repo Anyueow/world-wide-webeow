@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Hero } from "@/components/home/Hero";
 import { GameBoard } from "@/components/game/GameBoard";
+import { RevealAll } from "@/components/game/RevealAll";
 import { Reveal } from "@/components/motion/Reveal";
 import { VariableText } from "@/components/motion/VariableText";
 import { Timeline } from "@/components/experiences/Timeline";
@@ -144,6 +145,8 @@ export default function HomePage() {
           <div className="mt-12">
             <GameBoard />
           </div>
+
+          <RevealAll />
         </Container>
       </section>
 
