@@ -2,7 +2,7 @@ import type { GameItem } from "@/lib/game-types";
 
 /**
  * ===========================================================================
- * THE GAME. Seed set: 11 true items, 3 decoys.
+ * THE GAME. 15 true items, 6 decoys.
  * ===========================================================================
  *
  * Every `true` item traces to a row in research/fact-ledger.md, and the
@@ -35,6 +35,9 @@ export const PALETTE: readonly string[] = [
   "#7A5230", // 9 brown
   "#9A3A1E", // a coral deep
   "#6D8B90", // b ocean soft
+  "#E07B39", // c saffron
+  "#138808", // d india green
+  "#000080", // e navy
 ];
 
 export const gameItems: GameItem[] = [
@@ -67,10 +70,10 @@ export const gameItems: GameItem[] = [
   },
   {
     id: "headphones",
-    label: "Headphones",
+    label: "DJ headphones",
     kind: "true",
-    alt: "A pair of headphones",
-    source: "ledger: CONFIRMED, DJs (RC, SPEC26)",
+    alt: "A pair of DJ headphones",
+    source: "ledger: CONFIRMED, DJs (RC, SPEC26); ANANYA DIRECT, symbol list",
     reveal: "She DJs. Badly at first, and then not badly.",
     grid: [
       "0000000000000000",
@@ -204,7 +207,7 @@ export const gameItems: GameItem[] = [
     alt: "A leaf",
     source: "ledger: SINGLE-SOURCE, vegan since 2019 after a week of PETA advocacy (SITE23)",
     reveal:
-      "Went vegan in 2019 after one week of reading PETA. She does that: reads the thing, then changes her life on a Tuesday.",
+      "In 2019 she read PETA for one week and went vegan on the spot. That is the pattern worth noticing: she reads the thing, then changes her life on a Tuesday.",
     grid: [
       "0000000000000000",
       "0000000077000000",
@@ -407,6 +410,195 @@ export const gameItems: GameItem[] = [
       "0011111111111100",
       "0001100000011000",
       "0011000000001100",
+      "0000000000000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "india",
+    label: "India",
+    kind: "true",
+    alt: "The flag of India",
+    source: "ANANYA DIRECT, symbol list 2026-09-03",
+    reveal:
+      "Hyderabad. That is where she is from and where the first two things she built were built.",
+    grid: [
+      "0000000000000000",
+      "0000000000000000",
+      "1111111111111110",
+      "1cccccccccccccc0",
+      "1cccccccccccccc0",
+      "1cccccccccccccc0",
+      "1666666666666660",
+      "1666666ee6666660",
+      "1666666ee6666660",
+      "1666666666666660",
+      "1dddddddddddddd0",
+      "1dddddddddddddd0",
+      "1dddddddddddddd0",
+      "1111111111111110",
+      "0000000000000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "monkey",
+    label: "A monkey",
+    kind: "true",
+    alt: "A monkey's face",
+    source: "ANANYA DIRECT, symbol list 2026-09-03",
+    reveal:
+      "Her childhood nickname, because she would not stop climbing trees. Some things do not change, the trees just got taller.",
+    grid: [
+      "0000000000000000",
+      "0000999999990000",
+      "0009999999999000",
+      "9909999999999099",
+      "9990999999999099",
+      "9990991991999099",
+      "9990999999999099",
+      "0009999999999000",
+      "0009955555599000",
+      "0009551111559000",
+      "0009511111159000",
+      "0009551111559000",
+      "0009955555599000",
+      "0000999999990000",
+      "0000011111100000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "ladoo",
+    label: "Motichoor ladoos",
+    kind: "true",
+    alt: "Two round Indian sweets",
+    source: "ANANYA DIRECT, symbol list 2026-09-03",
+    reveal:
+      "Favourite food, no contest. Not a fancy answer, which is the point.",
+    grid: [
+      "0000000000000000",
+      "0000011111000000",
+      "0001188888110000",
+      "0011888888881000",
+      "0118888988888100",
+      "0188889888888810",
+      "0188888888898810",
+      "1888889888888881",
+      "1888888888888881",
+      "0188888889888810",
+      "0188898888888810",
+      "0118888888888100",
+      "0011888888881000",
+      "0001188888110000",
+      "0000011111000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "fries",
+    label: "Fries and a McFlurry",
+    kind: "true",
+    alt: "A carton of fries",
+    source: "ANANYA DIRECT, symbol list 2026-09-03",
+    reveal:
+      "Favourite fast food is a McFlurry with fries, eaten together, dipped. She will defend this.",
+    grid: [
+      "0000000000000000",
+      "0000888008880000",
+      "0008880888088800",
+      "0888088808880888",
+      "0888088808880888",
+      "0888888888888880",
+      "0222222222222220",
+      "0222222222222220",
+      "0022222222222200",
+      "0022222222222200",
+      "0002222222222000",
+      "0002222222222000",
+      "0000222222220000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "ribbons",
+    label: "Ribbons",
+    kind: "decoy",
+    alt: "A ribbon bow",
+    source: "decoy, Ananya's own: not artsy at all",
+    reveal:
+      "Not artsy. Not a little bit. Do not hand her a glue gun.",
+    grid: [
+      "0000000000000000",
+      "0222222002222220",
+      "0222222002222220",
+      "0222222002222220",
+      "0022222222222200",
+      "0002222222222000",
+      "0000022222200000",
+      "0000222222220000",
+      "0002220000222000",
+      "0022200000022200",
+      "0022000000002200",
+      "0220000000000220",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "glasses",
+    label: "Glasses",
+    kind: "decoy",
+    alt: "A pair of round glasses",
+    source: "decoy, Ananya's own: blue light only, 20/20 vision",
+    reveal:
+      "20/20 vision, thank you. The blue light glasses are a screen habit, not a prescription.",
+    grid: [
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0011111001111100",
+      "01bbbbb11bbbbb10",
+      "1bbbbbb11bbbbbb1",
+      "1bbbbbb11bbbbbb1",
+      "1bbbbbb11bbbbbb1",
+      "01bbbbb11bbbbb10",
+      "0011111001111100",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+    ],
+  },
+  {
+    id: "turtle",
+    label: "A sea turtle",
+    kind: "decoy",
+    alt: "A sea turtle",
+    source: "decoy, Ananya's own: has never scuba dived, wants to",
+    reveal:
+      "Has never scuba dived. Wants to, badly. Consider this one an open invitation.",
+    grid: [
+      "0000000000000000",
+      "0000000000000000",
+      "0000077777000000",
+      "0007777777770000",
+      "0077733337770000",
+      "0777333333377700",
+      "7773333333337770",
+      "7773333333337770",
+      "0777333333377700",
+      "0077733337770000",
+      "0007777777770000",
+      "0077000000007700",
+      "0000000000000000",
+      "0000000000000000",
       "0000000000000000",
       "0000000000000000",
     ],

@@ -53,6 +53,7 @@ Not yet fetched, so not yet a source: everything unticked in
 | X-6 | **Bindu reach.** | `SPEC26`: 7,000 women, 3,000 in workshops | `SITE23`: "over 8,000 individuals" |
 | X-7 | **GPA.** | `RC`: 3.3 | `OVER`: 3.26 |
 | X-8 | **Location intent.** | `RC` Aug 2025: Boston 50, Chicago 30, Austin 20, NYC later. No SF. | `SPEC-MAY` May 2026: "desperately want to relocate to SF", state it clearly. `SPEC26` Sep 2026 does not mention relocation. |
+| X-10 | **Is she still vegan?** `SITE23` says she went vegan in 2019 after a week of PETA. Her own 2026-09-03 symbol list gives motichoor ladoos as favourite food and a McFlurry with fries as favourite fast food, both of which contain dairy. Either the 2019 fact is stale or veganism ended. **The leaf item's reveal has been written in the past tense until she confirms.** | `SITE23` 2023 | ANANYA DIRECT 2026 |
 | X-9 | **Email.** | `SPEC-MAY`: anyushah@gmail.com | `SITE23`: shah.anan@northeastern.edu, presumably dead post graduation |
 
 ## SINGLE-SOURCE. True as far as one page says. Not corroborated.
