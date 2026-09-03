@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { useState } from "react";
 import { nav, site } from "@/content/site";
@@ -26,7 +25,6 @@ import { nav, site } from "@/content/site";
  * wants navigation. Transform only, so it costs nothing.
  */
 export function SiteHeader() {
-  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -57,28 +55,20 @@ export function SiteHeader() {
 
         <nav aria-label="Primary">
           <ul className="flex items-center gap-3.5 sm:gap-7">
-            {nav.map((item) => {
-              const active = pathname.startsWith(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={`group relative text-[0.75rem] font-medium tracking-tight whitespace-nowrap transition-opacity sm:text-[0.875rem] ${
-                      active ? "opacity-100" : "opacity-70 hover:opacity-100"
-                    }`}
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute -bottom-1 left-0 h-px w-full origin-right bg-current transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100 ${
-                        active ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
-                  </Link>
-                </li>
-              );
-            })}
+            {nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="group relative text-[0.75rem] font-medium tracking-tight whitespace-nowrap opacity-70 transition-opacity hover:opacity-100 sm:text-[0.875rem]"
+                >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100"
+                  />
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

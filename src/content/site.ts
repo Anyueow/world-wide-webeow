@@ -28,11 +28,15 @@ export const bio: string[] = [
   "I have been doing some version of this since 2018, which is why my timeline starts there and not at graduation.",
 ];
 
+/**
+ * In-page anchors, not routes. The site is one scrolling page (T-G.1), so nav
+ * just jumps to a section id on the same document instead of navigating.
+ */
 export const nav = [
-  { label: "Who am I", href: "/who-am-i" },
-  { label: "Experiences", href: "/experiences" },
-  { label: "Impact", href: "/impact" },
-  { label: "Contact", href: "/contact" },
+  { label: "Who am I", href: "#who-am-i" },
+  { label: "Experiences", href: "#experiences" },
+  { label: "Impact", href: "#impact" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 /**

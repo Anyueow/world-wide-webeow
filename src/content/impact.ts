@@ -32,9 +32,8 @@ import type { ImpactItem } from "@/lib/types";
  * a card that links nowhere is worse than no card. They are tracked in
  * /CONTENT-GAPS.md instead, and drop straight in once a public link exists.
  *
- * The page at /impact renders whatever is in this array and goes noindex when
- * it is empty. Flip `robots.index` in src/app/impact/page.tsx and add the route
- * to src/app/sitemap.ts in the same commit that fills the last gap.
+ * The #impact section on the single page (src/app/page.tsx) renders whatever
+ * is in this array, and shows a placeholder line when it is empty.
  */
 export const impactItems: ImpactItem[] = [
   {
