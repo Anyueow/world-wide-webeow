@@ -140,7 +140,7 @@ and 1440, and `Read` on the PNGs, because a game cannot be judged from source.
 | T-G.6 | Reveal-all escape hatch | IN PROGRESS | sonnet-5/session_797907ec-sub, 2026-09-03T01:20Z | A quiet, always visible control that dumps the whole story without playing. Non negotiable for the recruiter case and it costs almost nothing. Also the fallback when JavaScript fails. |
 | T-G.7 | The scrolling document underneath | TODO | | The real content as one honest scroll: the story, the work, the proof, how to reach her. Radically simpler than the four pages it replaces. Every fact in the server rendered HTML, so the game never gates what Google can read. Blocked on T-0.7. |
 | T-G.8 | Mobile | TODO | | 390px is the real target, since recruiters check on phones. Tap targets at least 44px, basket must not cover content, scorecard becomes a sheet rather than a hover. Hover does not exist on touch, so every hover affordance needs a tap equivalent. |
-| T-G.9 | Progress persistence | TODO | | Optional and low priority. Remember collected items in `localStorage` so a returning visitor is not reset. Must render correctly when storage throws or is empty. |
+| T-G.9 | Progress persistence | IN PROGRESS | sonnet-5/session_797907ec, 2026-09-03T01:25Z | Optional and low priority. Remember collected items in `localStorage` so a returning visitor is not reset. Must render correctly when storage throws or is empty. |
 
 ---
 
