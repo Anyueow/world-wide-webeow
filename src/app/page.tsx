@@ -1,8 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { Hero } from "@/components/home/Hero";
-import { GameBoard } from "@/components/game/GameBoard";
+import { GameProvider } from "@/components/game/GameProvider";
+import { GameFloatingField } from "@/components/game/GameFloatingField";
+import { GameBasket } from "@/components/game/GameBasket";
+import { FlyingIcon } from "@/components/game/FlyingIcon";
+import { GameToast } from "@/components/game/GameToast";
 import { RevealAll } from "@/components/game/RevealAll";
+import { gameItems } from "@/content/game-items";
 import { Reveal } from "@/components/motion/Reveal";
 import { VariableText } from "@/components/motion/VariableText";
 import { Timeline } from "@/components/experiences/Timeline";
@@ -81,12 +86,24 @@ function personJsonLd() {
   };
 }
 
+/**
+ * 21 items sliced into 7 groups of 3, one group per major section, so the
+ * icons read as sprinkled through the whole page (T-G.11) rather than boxed
+ * into one game board. Sequential slicing, not random per render: the split
+ * only has to look reasonably even, and it must be identical on the server
+ * and the client.
+ */
+const GAME_GROUP_SIZE = 3;
+function gameGroup(index: number) {
+  return gameItems.slice(index * GAME_GROUP_SIZE, (index + 1) * GAME_GROUP_SIZE);
+}
+
 export default function HomePage() {
   const groups = experiencesByYear();
   const experienceCount = sortedExperiences().length;
 
   return (
-    <>
+    <GameProvider>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd()) }}
@@ -94,7 +111,8 @@ export default function HomePage() {
 
       <Hero />
 
-      <section aria-labelledby="intro-heading" className="pb-24">
+      <section aria-labelledby="intro-heading" className="relative pb-24">
+        <GameFloatingField items={gameGroup(0)} />
         <Container width="wide">
           <h2 id="intro-heading" className="sr-only">
             Introduction
@@ -102,9 +120,15 @@ export default function HomePage() {
 
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7 lg:col-start-1">
+              <p className="text-micro text-ocean-soft">Two truths and a lie</p>
+              <p className="mt-2 max-w-[52ch] text-[0.9rem] text-ink-faint">
+                A few of the things floating on this page are really her. A few
+                are not. Click one to find out.
+              </p>
+
               {bio.map((line, index) => (
                 <Reveal key={line} delay={index * 0.08}>
-                  <p className="text-lede mb-4 max-w-[52ch] text-ink-soft">
+                  <p className="text-lede mt-6 mb-4 max-w-[52ch] text-ink-soft">
                     {line}
                   </p>
                 </Reveal>
@@ -121,40 +145,19 @@ export default function HomePage() {
                   </Button>
                 </div>
               </Reveal>
+
+              <RevealAll />
             </div>
           </div>
         </Container>
       </section>
 
       <section
-        id="game"
-        aria-labelledby="game-heading"
-        className="scroll-mt-24 border-t border-dune py-24"
-      >
-        <Container width="wide">
-          <p className="text-micro text-ocean-soft">Two truths and a lie</p>
-          <h2 id="game-heading" className="mt-6 max-w-[16ch]">
-            <VariableText as="span" className="display-face text-display block text-ink">
-              Click what is her
-            </VariableText>
-          </h2>
-          <p className="text-lede mt-6 max-w-[52ch] text-ink-soft">
-            A few of these are real. A few are not. Collect the real ones.
-          </p>
-
-          <div className="mt-12">
-            <GameBoard />
-          </div>
-
-          <RevealAll />
-        </Container>
-      </section>
-
-      <section
         id="who-am-i"
         aria-labelledby="who-am-i-heading"
-        className="scroll-mt-24 border-t border-dune pt-24 pb-16"
+        className="relative scroll-mt-24 border-t border-dune pt-24 pb-16"
       >
+        <GameFloatingField items={gameGroup(1)} />
         <Container width="wide">
           <p className="text-micro text-ocean-soft">Who am I</p>
           <h2 id="who-am-i-heading" className="mt-6 max-w-[13ch]">
@@ -173,7 +176,8 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section aria-labelledby="roll-heading" className="pb-24">
+      <section aria-labelledby="roll-heading" className="relative pb-24">
+        <GameFloatingField items={gameGroup(2)} />
         <Container width="wide">
           <h3 id="roll-heading" className="sr-only">
             Photographs
@@ -184,7 +188,8 @@ export default function HomePage() {
 
       <PacificaTide />
 
-      <section aria-labelledby="into-heading" className="border-t border-dune py-24">
+      <section aria-labelledby="into-heading" className="relative border-t border-dune py-24">
+        <GameFloatingField items={gameGroup(3)} />
         <Container width="wide">
           <h3 id="into-heading" className="text-micro text-ocean-soft">
             What I am into
@@ -215,8 +220,9 @@ export default function HomePage() {
       <section
         id="experiences"
         aria-labelledby="experiences-heading"
-        className="scroll-mt-24 border-t border-dune pt-24 pb-12"
+        className="relative scroll-mt-24 border-t border-dune pt-24 pb-12"
       >
+        <GameFloatingField items={gameGroup(4)} />
         <Container width="wide">
           <p className="text-micro text-ocean-soft">
             {groups[groups.length - 1]?.year} to {groups[0]?.year}
@@ -252,8 +258,9 @@ export default function HomePage() {
       <section
         id="impact"
         aria-labelledby="impact-heading"
-        className="scroll-mt-24 border-t border-dune pt-24 pb-24"
+        className="relative scroll-mt-24 border-t border-dune pt-24 pb-24"
       >
+        <GameFloatingField items={gameGroup(5)} />
         <Container width="wide">
           <p className="text-micro text-ocean-soft">Impact</p>
 
@@ -308,8 +315,9 @@ export default function HomePage() {
       <section
         id="contact"
         aria-labelledby="contact-heading"
-        className="scroll-mt-24 border-t border-dune pt-24 pb-24"
+        className="relative scroll-mt-24 border-t border-dune pt-24 pb-24"
       >
+        <GameFloatingField items={gameGroup(6)} />
         <Container width="default">
           <p className="text-micro text-ocean-soft">Contact</p>
 
@@ -389,6 +397,10 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
-    </>
+
+      <GameBasket />
+      <FlyingIcon />
+      <GameToast />
+    </GameProvider>
   );
 }

@@ -50,8 +50,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const basketRef = useRef<HTMLButtonElement | null>(null);
   const hasLoaded = useRef(false);
 
-  // Loaded after mount, client only. Initial render always matches the
-  // server (empty), so there is nothing to hydration-mismatch.
+  // Loaded after mount, client only, deliberately. The initial render must
+  // match the server (empty) or React flags a hydration mismatch, so this
+  // cannot run during render or in a lazy useState initializer, only after.
+  // This is a one-time hydration-safe read from localStorage on mount, not a
+  // reaction to props or state, so there is no cascading render here despite
+  // the lint rule's general warning against setState-in-effect.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const stored = loadProgress();
     if (stored.collected.length || stored.attempted.length) {
@@ -60,6 +65,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
     hasLoaded.current = true;
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (!hasLoaded.current) return;

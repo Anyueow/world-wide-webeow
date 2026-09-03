@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { itemById, useGame } from "@/components/game/GameProvider";
 import { PixelIcon } from "@/components/game/PixelIcon";
@@ -13,18 +14,26 @@ import { PixelIcon } from "@/components/game/PixelIcon";
 export function FlyingIcon() {
   const { flight, clearFlight, basketRef } = useGame();
   const reduceMotion = useReducedMotion();
+  const [toRect, setToRect] = useState<DOMRect | null>(null);
 
-  if (!flight || reduceMotion) return null;
+  // Reading a ref's current value has to happen outside render, not during
+  // it, so the basket's position is measured here rather than inline below.
+  useEffect(() => {
+    if (flight && basketRef.current) {
+      setToRect(basketRef.current.getBoundingClientRect());
+    } else {
+      setToRect(null);
+    }
+  }, [flight, basketRef]);
+
+  if (!flight || reduceMotion || !toRect) return null;
 
   const item = itemById(flight.itemId);
   if (!item) return null;
 
-  const basketRect = basketRef.current?.getBoundingClientRect();
-  if (!basketRect) return null;
-
   const from = flight.fromRect;
-  const toX = basketRect.left + basketRect.width / 2 - (from.left + from.width / 2);
-  const toY = basketRect.top + basketRect.height / 2 - (from.top + from.height / 2);
+  const toX = toRect.left + toRect.width / 2 - (from.left + from.width / 2);
+  const toY = toRect.top + toRect.height / 2 - (from.top + from.height / 2);
 
   return (
     <motion.div

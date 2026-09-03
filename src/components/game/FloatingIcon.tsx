@@ -60,7 +60,7 @@ export function FloatingIcon({
       }}
       aria-pressed={attempted}
       aria-label={`${item.alt}${collected ? ", collected" : ""}`}
-      className={`absolute z-10 flex h-16 w-16 items-center justify-center rounded-xl border transition-[opacity,border-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral sm:h-20 sm:w-20 ${
+      className={`pointer-events-auto absolute z-10 flex h-16 w-16 items-center justify-center rounded-xl border transition-[opacity,border-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral sm:h-20 sm:w-20 ${
         attempted
           ? "border-dune bg-sand opacity-40"
           : "border-dune/70 bg-sand/90 opacity-95 hover:border-coral hover:opacity-100"
