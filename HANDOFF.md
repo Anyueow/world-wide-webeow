@@ -4,7 +4,7 @@ Living board for ananya-personal. Multiple agents work this repo at once.
 **Read `CLAUDE.md` before you touch this file.** Claim before you build, push
 the claim, push the finish.
 
-Last updated: 2026-09-02, by `opus-5/session_014ecdjnxdyE`
+Last updated: 2026-09-03, by `opus-5/session_014ecdjnxdyE`
 
 | Status | Meaning |
 | --- | --- |
@@ -13,149 +13,228 @@ Last updated: 2026-09-02, by `opus-5/session_014ecdjnxdyE`
 | `BLOCKED` | Waiting on Ananya or on another task. Blocker named in Notes. |
 | `DONE` | Built, verified, pushed. Notes say what and where. |
 | `NEEDS REWORK` | Built, but Ananya rejected it. Do not rebuild without her specifics. |
+| `SUPERSEDED` | Was real work, is now dead. Do not polish it. Kept for history. |
 
 ---
 
-## Workstream 1: Content
+# READ THIS FIRST: two decisions that invalidate a lot of the board
 
-Copy, data, photos, links. The stuff only Ananya can supply, plus the plumbing
-that consumes it.
+Ananya made two calls on 2026-09-03 that change the architecture, not just the
+content. Everything below is organised around them.
 
-**Model:** Sonnet is enough for data entry from a known source. Use Opus for
-anything that writes copy in Ananya's voice, since voice is the hard part and
-generic copy is the one thing she has explicitly banned.
+**1. The site is ONE PAGE. One scroll. No routes.**
+Her words: "there should only ever be a single page on scroll, multiple site
+personal websites are an ick." So `/who-am-i`, `/experiences`, `/impact` and
+`/contact` all collapse into `/`. Those routes get deleted, not hidden.
 
-**Tools:** `mcp__Notion__fetch` and `mcp__Notion__search` for source material,
-`Read`/`Write`/`Edit` for the content files, `Grep` to check nothing hardcodes
-copy in a component.
+**2. The site IS a game.** Not a page with a game on it. See Workstream G.
+
+**3. Every fact currently in `src/content/` is REJECTED.** Her words: "I hate
+all the content. It's inaccurate on so many levels." Do not patch it, do not
+cite it, do not copy a bullet out of it into something new. It was derived from
+Notion pages that contradict each other and are in places years stale. It is
+quarantined until Workstream 0 replaces it wholesale.
+
+---
+
+# Workstream 0: Truth and story
+
+**This blocks everything else. Nothing that renders a fact about Ananya should
+be built until this lands.**
+
+The failure being fixed: an agent read seven Notion pages, found conflicts,
+picked a side silently, and shipped 29 experience entries that were wrong.
+The fix is not "read harder". The fix is a **fact ledger where every single
+claim carries a source and a confidence**, and where conflicts are escalated to
+Ananya rather than resolved by an agent's judgement.
+
+**Source hierarchy. This is the tiebreaker. Use it, do not improvise.**
+
+1. Ananya's direct answers in conversation. Beats everything.
+2. A current resume PDF, if one is supplied.
+3. Notion, newest page wins over older page on the same fact.
+4. Nothing else. No inference, no "this seems likely", no LinkedIn scraping.
+
+If a fact appears in exactly one place and nowhere else, that is confidence
+`single-source`, not confidence `confirmed`. Mark it and move on.
+
+**Model:** Opus for all of it. This is synthesis and judgement about a person,
+which is the exact thing a smaller model will smooth into generic mush, and
+generic is the one outcome Ananya has explicitly banned.
+
+**Tools:** `mcp__Notion__search` (empty query plus filters to enumerate, not
+just semantic search) and `mcp__Notion__fetch` for every hit. `Write` for the
+ledger and biography. `AskUserQuestion` for the interview. Do **not** use
+`WebFetch` on ananya-personal.netlify.app, the egress proxy blocks it.
 
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| T-1.1 | Typed content shapes for Experience and ImpactItem | DONE | opus-5/014ecdjnxdyE | `src/lib/types.ts`. Every field doc commented. Add an object to the array and it renders. |
-| T-1.2 | Pull the full spec from Notion | DONE | opus-5/014ecdjnxdyE | Source: "Personal Website Specs with Content". Full 2018 to 2026 role list, voice rules, Impact source list. |
-| T-1.3 | Draft homepage bio and tagline options | DONE | opus-5/014ecdjnxdyE | `src/content/site.ts`. Marked DRAFT. Tagline locked to "curiouser, curiouser" by Ananya. Bio is 3 lines, unapproved. |
-| T-1.4 | Draft Who Am I copy, camera roll captions, Pacifica passage | DONE | opus-5/014ecdjnxdyE | `src/content/camera-roll.ts` and inline in `PacificaTide.tsx`. All marked DRAFT. |
-| T-1.5 | Five prototype experience entries | DONE | opus-5/014ecdjnxdyE | `src/content/experiences.ts`. Enterpi 2018, Bindu 2020, FindHer 2023, Cartesian 2025, Leprechaun 2026. Real data from Notion. |
-| T-1.6 | Full experience timeline | NEEDS REWORK | opus-5/014ecdjnxdyE | Built 29 entries, 2015 to 2026, from all seven Notion source pages. **Ananya says the information is wrong.** Waiting on specifics before touching it again. Do not re-derive from Notion, the Notion sources conflict with each other and may all be stale. |
-| T-1.7 | Impact entries with real URLs | DONE | opus-5/014ecdjnxdyE | 10 artifacts in `src/content/impact.ts` with real URLs found in Notion: Vera, flood risk, FindHer, Sandcastles, the Sherman Airtable, HAN, GitHub, plus two Drive docs. Items with no public URL are listed in `/CONTENT-GAPS.md` section B, not faked into cards. |
-| T-1.8 | Real contact links | BLOCKED | | Partially done. GitHub confirmed `github.com/Anyueow`. Email and LinkedIn taken from Ananya's own May 2026 Notion spec but **unverified**, and two different LinkedIn handles exist in Notion. Source of truth is ananya-personal.netlify.app, which **the egress proxy blocks from this environment**, so an agent cannot check it. Ananya must paste them. See CONTENT-GAPS.md A-5 and C-1. |
-| T-1.9 | Three resume PDFs | BLOCKED | | Blocked on Ananya. Drop into `/public/resume/`, filenames already referenced in `site.ts`. Contact page checks the filesystem at build and only shows a link if the file exists. |
-| T-1.10 | Camera roll photos | BLOCKED | | Blocked on Ananya. 9 labelled slots in `src/content/camera-roll.ts`. Add a `src` to a slot, that is the whole job. |
-| T-1.11 | Experience photos | BLOCKED | | Blocked on Ananya. One slot per entry, `photo.note` says what belongs there. |
-| T-1.12 | Professional headshot | BLOCKED | | Blocked on Ananya. `headshot` in `site.ts`. Not yet placed on the homepage, the caricature holds the hero. |
+| T-0.1 | Quarantine the rejected content | DONE | opus-5/014ecdjnxdyE | Warning headers added to `src/content/experiences.ts` and `impact.ts` telling any agent the data is rejected and not to build on it. |
+| T-0.2 | Enumerate every Notion page, do not sample | TODO | | Not just the 7 named in the master spec. Sweep: every page tagged `ananya 101` in Life in Pages, every project sub-page (Bindu, FoundHer/FindHer, Fitness Bolt, E-Cup, Social Frame, Likd by Anyu, Dogspotted), Academics for the research work, and the Leprechaun knowledge base. Use `mcp__Notion__search` with an empty query plus a teamspace or date filter to LIST pages, since semantic search silently misses things. Output: a checklist of every page URL with a read/not-read box, committed as `research/notion-index.md`. |
+| T-0.3 | Build the fact ledger | TODO | | Blocked on T-0.2. One row per atomic claim: the claim, every source that states it, every source that contradicts it, and a confidence of `confirmed` / `single-source` / `CONFLICT`. Commit as `research/fact-ledger.md`. This is the artifact that makes the next agent unable to repeat the mistake. Expect 150+ rows. Known conflicts to resolve, do not silently pick: HAN title by year, Bindu reach (7,000 vs 8,000), Zero Clix and Tyle start years, Sherman Center end date, FindHer vs FoundHer naming, which LinkedIn handle. |
+| T-0.4 | Interview Ananya | TODO | | Blocked on T-0.3. **She chose this over supplying a resume, so it is the primary input, not a formality.** Two halves. (a) Every `CONFLICT` row, asked as a specific closed question she can answer in three words. (b) The autobiography questions, which are in no Notion page and cannot be derived: what is her core, who is she when nothing is being measured, what actually drives her, what is she avoiding, what does she want people to be wrong about. Use `AskUserQuestion` in batches of 4, not one giant wall. |
+| T-0.5 | Write the biography | TODO | | Blocked on T-0.4. `research/BIOGRAPHY.md`. Not website copy. The long, honest read: origin, the through-line, the contradictions, the drivers, what the pattern across 2015 to 2026 actually says about her. Written as if for a book, so that everything the site says can be traced back to a paragraph here. Ananya's framing: "read and study me like you're writing my autobiography." |
+| T-0.6 | Frame the story | TODO | | Blocked on T-0.5. One page: the thesis of the site in a sentence, the three beats it moves through, and the specific reason each game symbol is in the game. This is what makes the game mean something rather than being a novelty. Commit as `research/story-frame.md`. |
+| T-0.7 | Rebuild the content files from the ledger | TODO | | Blocked on T-0.6. Rewrite `src/content/*` from scratch. **Every fact must carry a `source` field pointing at its ledger row.** A fact with no ledger row does not ship. |
+| T-0.8 | Contact details | BLOCKED | | Still unanswered. Ananya must paste email, LinkedIn URL and GitHub URL. Notion has two conflicting LinkedIn handles. `ananya-personal.netlify.app` is the stated source of truth but the egress proxy blocks it from this environment, so no agent can read it. |
 
 ---
 
-## Workstream 2: Design
+# Workstream G: The single page game
 
-Layout, type, palette, composition. What it looks like standing still.
+**The concept, in Ananya's words:** "turn the website into a quick game where
+users have to click on pixelated icons of things that represent me best or
+things I like or associate with, throw in a few fake ones in there so it's like
+a two truths and a lie game. Just click on it to collect, have an animation of
+collecting the pixelated items in a basket in the bottom right, and give users a
+hovering scorecard which includes what they've unlocked knowing about me and why
+that symbol was important to me."
 
-**Model:** Opus. Design judgement is the whole task and it is the thing being
-judged by recruiters in the first 30 seconds.
+Plus: "the design sucks as well. Simplify the shit out of it."
 
-**Tools:** `Write`/`Edit` for components, Playwright through `Bash` for
-screenshots at real viewports, `Read` on the PNGs to actually look at the
-result. Do not mark a design task done without looking at it.
+**The one hard constraint that shapes everything.** This site's job is to be the
+first thing a recruiter sees when they Google her. So the real content must be
+in the server rendered HTML whether or not anyone plays, and someone with 30
+seconds and no patience for a game must still get the resume. That is not a
+reason to water the game down. It means the game is a **layer over** a real
+document, not a replacement for one. Build the honest single page first, then
+put the game on top of it.
+
+**Model:** Opus for the game mechanic, the pixel icon system and the motion.
+Sonnet is fine for converting the existing sections into single page blocks once
+the pattern exists.
+
+**Tools:** `Write` and `Edit`. Playwright through `Bash` for screenshots at 390
+and 1440, and `Read` on the PNGs, because a game cannot be judged from source.
+`Bash` for build, tsc and lint.
 
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| T-2.1 | Palette and type tokens | DONE | opus-5/014ecdjnxdyE | `src/app/globals.css`. Pacifica dusk, chosen by Ananya over teal and violet. Fraunces plus Inter, chosen over Bricolage and Instrument Serif. Fluid `text-*` scale, no breakpoint soup. |
-| T-2.2 | Layout shell: header, footer, container, buttons, links | DONE | opus-5/014ecdjnxdyE | `src/components/layout` and `src/components/ui`. Header uses `mix-blend-difference` so it inverts over the dark Pacifica panel without a scroll listener. |
-| T-2.3 | Hero | DONE | opus-5/014ecdjnxdyE | Caricature reprocessed: the supplied PNG had a baked in transparency checkerboard, converted luminance to alpha and cropped to the figure. 952KB to 59KB. |
-| T-2.4 | Who Am I: camera roll pile | DONE | opus-5/014ecdjnxdyE | CSS columns, not grid, so heights stagger like a real dump of photos. Tilt per tile, straightens on hover. |
-| T-2.5 | Who Am I: Pacifica tide | DONE | opus-5/014ecdjnxdyE | Two stacked copies of the passage, clip-path reveals the ocean copy as you scroll. Duplicate is aria-hidden. |
-| T-2.6 | Experiences timeline design | DONE | opus-5/014ecdjnxdyE | **Awaiting Ananya's approval before Impact is designed.** Sticky year rail, coral spine, collapsible year groups, alternating photo side, parallax. |
-| T-2.7 | Contact page | DONE | opus-5/014ecdjnxdyE | Deliberately plain, per brief. Three channels plus the resume list. |
-| T-2.8 | Impact card grid and masonry | TODO | | Held until T-2.6 is signed off so the card can inherit the timeline's visual language. Page and data wiring already exist, only the card design is missing. |
-| T-2.9 | Homepage headshot placement | TODO | | Decide whether the real headshot sits on the homepage next to the caricature, or on Who Am I. Depends on T-1.12. |
-| T-2.10 | Dark mode | TODO | | "Optional but nice to have" per the spec. Tokens are already centralised, so this is a token swap plus a toggle, not a rewrite. Lowest priority. |
-| T-2.11 | Favicon and OG image | DONE | sonnet-5/session_797907ec | Replaced the default favicon and caricature OG image with generated ones: `src/app/icon.tsx` (32x32, ocean tile with wordmark initial), `src/app/apple-icon.tsx` (180x180, same mark), `src/app/opengraph-image.tsx` (1200x630 Pacifica dusk share card, name plus tagline). All use `next/og` `ImageResponse` with `export const dynamic = "force-static"`, required for `output: export`. Deleted the stock `favicon.ico`. Dropped the manual `images` arrays from `layout.tsx` metadata since Next auto-wires the generated routes. Build, tsc and lint clean. |
+| T-G.1 | Collapse to a single page | TODO | | Delete the `/who-am-i`, `/experiences`, `/impact` and `/contact` routes. One `/` that scrolls. Nav becomes in-page anchors or disappears entirely. Keep `sitemap.ts` and `robots.ts`, point them at `/` only. This alone deletes a lot of code, which is most of what "simplify the shit out of it" means. |
+| T-G.2 | Pixel icon system | TODO | | ~24 icons. **Author them as data, not image files:** each icon is a small grid (16x16) of palette indices in a typed array, rendered to inline SVG rects. Reasons: no external assets to load, infinitely scalable, recolours with the palette tokens, and Ananya can add an item by adding one row. Put the type in `src/lib/types.ts` and the icons in `src/content/icons.ts`. Needs a tiny authoring note in the file header so the next person can draw one. |
+| T-G.3 | The game board | TODO | | Blocked on T-0.6 for which symbols are real, and T-G.2 for the icons. Scattered field of icons, click to collect. Real items and decoys mixed. Decoys are the "lie" in two truths and a lie. **A decoy click must be fun, not punishing:** it should reveal why it is *not* her, which is its own kind of characterisation. Keyboard operable, real `<button>` elements, each with an accessible name. |
+| T-G.4 | Basket and collection animation | TODO | | Bottom right. Collected icon flies from where it was clicked into the basket and lands. Transform and opacity only. Basket shows a count and can be opened to see what is inside. Must degrade to an instant state change under `prefers-reduced-motion`. |
+| T-G.5 | Hovering scorecard | TODO | | Shows what the player has unlocked: which symbols they got right, which were decoys, and for each real one, the short piece of Ananya it reveals and why that symbol matters to her. **This is where the biography surfaces, so it is the most important writing on the site.** Blocked on T-0.5. |
+| T-G.6 | Reveal-all escape hatch | TODO | | A quiet, always visible control that dumps the whole story without playing. Non negotiable for the recruiter case and it costs almost nothing. Also the fallback when JavaScript fails. |
+| T-G.7 | The scrolling document underneath | TODO | | The real content as one honest scroll: the story, the work, the proof, how to reach her. Radically simpler than the four pages it replaces. Every fact in the server rendered HTML, so the game never gates what Google can read. Blocked on T-0.7. |
+| T-G.8 | Mobile | TODO | | 390px is the real target, since recruiters check on phones. Tap targets at least 44px, basket must not cover content, scorecard becomes a sheet rather than a hover. Hover does not exist on touch, so every hover affordance needs a tap equivalent. |
+| T-G.9 | Progress persistence | TODO | | Optional and low priority. Remember collected items in `localStorage` so a returning visitor is not reset. Must render correctly when storage throws or is empty. |
 
 ---
 
-## Workstream 3: Animation, responsiveness, bugs
+# Workstream 1: Content
 
-Motion, breakpoints, and everything that only shows up once it moves.
+**Status: mostly frozen.** Content work resumes after Workstream 0. The rows
+below are kept because the plumbing is still good even though the facts are not.
 
-**Model:** Opus for the motion architecture and scroll performance work.
-Sonnet is fine for a contained breakpoint fix once the pattern exists.
-
-**Tools:** Playwright through `Bash` at 390, 768, 1024, 1440 and 2560, capturing
-at several scroll offsets. `Bash` for `npm run build` and `tsc`. Chrome DevTools
-protocol through Playwright if you need real frame timings.
+**Model:** Opus for anything in Ananya's voice. **Tools:** Notion MCP, `Write`.
 
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| T-3.1 | Motion primitives | DONE | opus-5/014ecdjnxdyE | `Reveal`, `VariableText`, `CustomCursor`, `app/template.tsx`. One vocabulary, reused everywhere, so nothing invents its own easing. |
-| T-3.2 | Reduced motion support | DONE | opus-5/014ecdjnxdyE | Every animated component branches on `useReducedMotion` in JS and returns a static element, plus a CSS backstop in `globals.css`. Not just a media query. |
-| T-3.3 | Scroll performance discipline | DONE | opus-5/014ecdjnxdyE | Scroll driven animation is opacity and transform only. Layout animation happens on click only, in `YearGroup`. This rule is in `CLAUDE.md`, keep it. |
-| T-3.4 | Sticky year rail bug | DONE | opus-5/014ecdjnxdyE | The nav was a stretched grid item, so it spanned the whole timeline and had nothing to stick to. Fixed with `self-start`. |
-| T-3.5 | Caricature checkerboard bug | DONE | opus-5/014ecdjnxdyE | Source PNG shipped a flattened transparency checkerboard. Converted to real alpha. |
-| T-3.6 | Mobile header wrap bug | DONE | opus-5/014ecdjnxdyE | Brand and nav wrapped to two lines at 390px. Brand collapses to "AS" below `sm`, nav gaps tightened, `whitespace-nowrap` throughout. |
-| T-3.12 | Header colliding with body text | DONE | opus-5/014ecdjnxdyE | A fixed bar with no background sits on body text at some scroll position on every page. Rather than adding a scrim, the header retracts on scroll down and returns on scroll up. Transform only. Always visible in the top 140px and under reduced motion. |
-| T-3.14 | Timeline render cost at 29 entries | DONE | opus-5/014ecdjnxdyE | Page was ~35,000px of grey placeholder boxes. Empty photo slots now collapse to one line, parallax subscribers only mount for entries that have a real photo, and entries carry `content-visibility: auto` with an intrinsic size so off screen entries skip layout and paint. Down to 15,500px, ~1.0s load. |
-| T-3.15 | OG image and icons served with no Content-Type | DONE | opus-5/014ecdjnxdyE | Found verifying T-2.11 on the merged tree. `next/og` metadata routes emit real PNGs at extensionless paths (`out/icon`, `out/apple-icon`, `out/opengraph-image`). Netlify infers Content-Type from the extension, so it served them as `application/octet-stream`: unreliable favicon, and LinkedIn and Slack would silently refuse to render the share card. Fixed with three explicit `Content-Type = "image/png"` header blocks in `netlify.toml`. **Any future `next/og` route needs the same treatment.** |
-| T-3.7 | Full responsive audit | TODO | | Every page at 390, 768, 1024, 1440, 2560. The timeline at 768 in particular: it drops to one column there and the alternation stops, needs a look. |
-| T-3.8 | Lighthouse 90+ on all four pages | TODO | | Not yet measured. Run against the built static output, not the dev server. Watch LCP on the hero and CLS on the photo slots. |
-| T-3.9 | Timeline performance with 25 entries | TODO | | Currently five entries. Each one mounts its own `useScroll` and `useInView`. At 25 that is 50 scroll subscribers, which may need consolidating into one shared scroll listener. Measure before rewriting. |
-| T-3.10 | Keyboard and screen reader pass | TODO | | Focus order, focus visibility on the year rail and collapsed groups, and whether the aria-hidden tide duplicate is announced anywhere it should not be. |
-| T-3.11 | Cross browser check | TODO | | Safari especially: `mix-blend-difference` on a fixed header, `clip-path` animation on the tide, and CSS columns in the camera roll are the three risky spots. |
-| T-3.13 | Netlify hosting configuration | TODO | | Ananya is hosting the site on Netlify now. `netlify.toml` has build command, publish dir and cache headers already. Needs a look at: custom domain and HTTPS setup in Netlify's own dashboard (not something an agent can do), a `_redirects` or `[[redirects]]` fallback for the static 404 page, and whether `site.url` in `src/content/site.ts` should switch from the `netlify.app` subdomain to the real domain once it exists. |
+| T-1.1 | Typed content shapes | DONE | opus-5/014ecdjnxdyE | `src/lib/types.ts`. The shapes survive the rewrite. Needs a `source` field added per T-0.7. |
+| T-1.2 | Pull the master spec from Notion | DONE | opus-5/014ecdjnxdyE | Superseded in practice by T-0.2, which sweeps everything rather than seven pages. |
+| T-1.3 | Homepage bio and taglines | NEEDS REWORK | | Rejected with the rest of the content. Tagline "curiouser, curiouser" was chosen by Ananya and survives. |
+| T-1.4 | Who Am I copy, captions, Pacifica passage | NEEDS REWORK | | Rejected. The Pacifica metaphor itself is Ananya's and is worth keeping in some form, the four lines are not. |
+| T-1.5 | Five prototype experience entries | SUPERSEDED | | Folded into T-1.6. |
+| T-1.6 | Full experience timeline | NEEDS REWORK | | 29 entries built from conflicting Notion sources. **Rejected as inaccurate.** Rebuild only via T-0.7. Do not patch. |
+| T-1.7 | Impact entries | NEEDS REWORK | | 10 artifacts with real URLs. The **URLs** are probably still good, they came from Notion verbatim, and are worth salvaging into the ledger. The **descriptions** are rejected. |
+| T-1.8 | Real contact links | BLOCKED | | See T-0.8. |
+| T-1.9 | Three resume PDFs | BLOCKED | | Ananya to supply. Contact block checks the filesystem at build, so a missing PDF shows as unavailable rather than a broken link. |
+| T-1.10 | Camera roll photos | BLOCKED | | 9 labelled slots. May be superseded by the game, decide during T-G.7. |
+| T-1.11 | Experience photos | BLOCKED | | Likely superseded by the game. |
+| T-1.12 | Professional headshot | BLOCKED | | Ananya to supply. |
 
 ---
 
-## Workstream 4: Verification
+# Workstream 2: Design
 
-A dedicated reviewer that runs after any workstream lands something. This agent
-does not build. It checks, reports, and files new `TODO` rows for what it finds.
+**Model:** Opus. **Tools:** `Write`/`Edit`, Playwright screenshots, `Read` on
+the PNGs. Do not mark a design task done without looking at it.
 
-**Model:** Opus. It has to hold the brief and the rendered output in mind at the
-same time and say whether they match, which is judgement, not a checklist.
+| ID | Task | Status | Owner | Notes |
+| --- | --- | --- | --- | --- |
+| T-2.1 | Palette and type tokens | DONE | opus-5/014ecdjnxdyE | `src/app/globals.css`. Pacifica dusk, chosen by Ananya. Fraunces plus Inter. **Survives the rebuild.** Pixel art will need a couple of extra palette entries. |
+| T-2.2 | Layout shell | NEEDS REWORK | | Header, footer, container, buttons. A four route nav is meaningless on a single page. Container and buttons survive. |
+| T-2.3 | Hero | NEEDS REWORK | | The caricature processing work survives (952KB to 59KB, real alpha). The hero itself is replaced by the game. |
+| T-2.4 | Camera roll pile | SUPERSEDED | | Replaced by the game board. |
+| T-2.5 | Pacifica tide | NEEDS REWORK | | The clip-path tide is the one piece of the old design worth arguing to keep. Decide during T-G.7 whether it survives as a beat in the single scroll. |
+| T-2.6 | Experiences timeline | SUPERSEDED | | Ananya never approved the interaction and the content under it was wrong. Do not polish it. Some of it may return as a compact block in T-G.7. |
+| T-2.7 | Contact page | SUPERSEDED | | Becomes a block on the single page. |
+| T-2.8 | Impact card grid | SUPERSEDED | | Folded into T-G.7. |
+| T-2.9 | Headshot placement | TODO | | Depends on T-1.12 and on what the game leaves room for. |
+| T-2.10 | Dark mode | TODO | | Lowest priority. Tokens are centralised so it stays cheap. |
+| T-2.11 | Favicon and OG image | DONE | sonnet-5/session_797907ec | `src/app/icon.tsx`, `apple-icon.tsx`, `opengraph-image.tsx` via `next/og` with `dynamic = "force-static"`. See T-3.15 for the Content-Type fix these needed. |
 
-**Tools:** `Bash` to start the dev server and run the build, Playwright through
-`Bash` for screenshots and timings, `Read` on the screenshots to actually look,
-`Grep` on `out/` to verify server rendered content, `mcp__Notion__fetch` to
-re-read the spec it is checking against.
+---
+
+# Workstream 3: Animation, responsiveness, bugs
+
+**Model:** Opus for motion architecture and scroll performance. Sonnet for a
+contained breakpoint fix. **Tools:** Playwright at 390/768/1024/1440/2560,
+`Bash` for build and tsc.
+
+| ID | Task | Status | Owner | Notes |
+| --- | --- | --- | --- | --- |
+| T-3.1 | Motion primitives | DONE | opus-5/014ecdjnxdyE | `Reveal`, `VariableText`, `CustomCursor`, `app/template.tsx`. **Survives.** The game should reuse this vocabulary rather than inventing its own easing. |
+| T-3.2 | Reduced motion support | DONE | opus-5/014ecdjnxdyE | Every animated component branches in JS via `useReducedMotion`, plus a CSS backstop. **The game must hold this line**, especially the collection animation. |
+| T-3.3 | Scroll performance discipline | DONE | opus-5/014ecdjnxdyE | Scroll driven animation is opacity and transform only. Rule lives in `CLAUDE.md`. Keep it. |
+| T-3.4 | Sticky year rail bug | SUPERSEDED | | Timeline is gone. |
+| T-3.5 | Caricature checkerboard | DONE | opus-5/014ecdjnxdyE | Source PNG had a flattened transparency checkerboard. Converted luminance to alpha. Asset survives. |
+| T-3.6 | Mobile header wrap | SUPERSEDED | | Header is being rebuilt. |
+| T-3.12 | Header colliding with body text | SUPERSEDED | | Same. The retract-on-scroll idea is worth reusing. |
+| T-3.14 | Timeline render cost | SUPERSEDED | | Timeline is gone. The lesson survives and is worth reading before building the game board: `content-visibility: auto`, and never mount a scroll subscriber per item. |
+| T-3.15 | OG and icons served as octet-stream | DONE | opus-5/014ecdjnxdyE | `next/og` under `output: export` emits PNGs at extensionless paths, so Netlify served them as `application/octet-stream` and LinkedIn would not render the share card. Fixed with explicit `Content-Type` headers in `netlify.toml`. **Any future `next/og` route needs the same.** |
+| T-3.7 | Full responsive audit | TODO | | Redo after the game lands. |
+| T-3.8 | Lighthouse 90+ | TODO | | Run against built output, not the dev server. |
+| T-3.9 | Per item scroll subscribers | SUPERSEDED | | Solved in T-3.14, and the timeline is gone. |
+| T-3.10 | Keyboard and screen reader pass | TODO | | **Much higher stakes now.** A click-to-collect game is trivially inaccessible if built carelessly. Real buttons, focus order, live region for the scorecard. |
+| T-3.11 | Cross browser check | TODO | | Safari: `mix-blend-difference` on a fixed header and `clip-path` animation are the risky spots. |
+| T-3.13 | Netlify hosting configuration | TODO | | Custom domain and HTTPS are dashboard work Ananya has to do. Agent side: a redirects fallback for the 404, and switching `site.url` when a real domain exists. |
+
+---
+
+# Workstream 4: Verification
+
+A dedicated reviewer that runs after any workstream lands. It does not build. It
+checks, reports, and files new `TODO` rows.
+
+**Model:** Opus. It has to hold the brief and the rendered output in mind at once
+and say whether they match.
+
+**Tools:** `Bash` for dev server, build, tsc, lint. Playwright for screenshots
+and timings. `Read` on the screenshots, actually look at them. `Grep` on `out/`
+to verify server rendered content. Notion MCP to re-read what it checks against.
 
 **What it checks, every pass:**
 
-1. **Does it match the brief.** Re-read the Notion spec and the original brief.
-   Every requirement, not the ones that are easy to test. Flag anything that
-   drifted.
+1. **Does it match the brief.** Every requirement, not the testable ones.
 2. **Does the build pass.** `npm run build`, `npx tsc --noEmit`, `npm run lint`.
-   All three, clean.
-3. **Is it fast.** Lighthouse against the built output. LCP, CLS, TBT, total
-   bytes. The target is 90+ and the brief says creative direction never costs
-   speed.
-4. **Is the content really there.** `grep` the emitted HTML in `out/` for
-   bullets, skills and links. If content only exists after hydration, that is a
-   bug, not a preference.
-5. **Does it look right.** Screenshots at 390, 768, 1440 and 2560, at several
-   scroll offsets, and actually look at them. Overlaps, clipped text, orphaned
-   headings, dead space, misaligned baselines.
-6. **Does it move right.** Scroll through with motion on and with reduced motion
-   forced. Check nothing janks and nothing shifts under the reader.
-7. **Voice.** Grep the whole repo for em dashes. Read any new copy against the
-   voice rules in `CLAUDE.md`.
+3. **Is it fast.** Lighthouse on the built output. LCP, CLS, TBT, bytes.
+4. **Is the content really there.** `grep` the emitted HTML in `out/`. Content
+   that only exists after hydration is a bug.
+5. **Is it actually true.** New, and the most important one. Every rendered fact
+   traces to a row in `research/fact-ledger.md`. A fact with no row is a defect
+   at the same severity as a crash.
+6. **Does it look right.** Screenshots at 390, 768, 1440, 2560.
+7. **Does it move right.** Motion on, and reduced motion forced.
+8. **Voice.** Grep for em dashes. Read new copy against `CLAUDE.md`.
 
 | ID | Task | Status | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| T-4.1 | Verification pass on the prototype | DONE | opus-5/014ecdjnxdyE | Screenshotted 10 views at 1440 and 390. Found and fixed 5 bugs: sticky rail, caricature checkerboard, mobile header wrap, chevron direction, header collision. Build, tsc and lint clean. No page errors. Content confirmed present in `out/experiences/index.html` with h1 to h2 to h3 hierarchy intact. |
-| T-4.2 | Lighthouse baseline | TODO | | First real numbers. Run before anyone optimises anything, so there is something to compare against. |
-| T-4.3 | Verification pass after Impact lands | TODO | | Blocked until T-2.8. |
-| T-4.4 | Pre launch pass | TODO | | The last one before the domain is pointed. Includes checking every outbound link resolves and no `REPLACE-ME` string survives anywhere. |
+| T-4.1 | Verification pass on the prototype | DONE | opus-5/014ecdjnxdyE | Found 5 rendering bugs. Did **not** catch that the content was factually wrong, which is why check 5 now exists. |
+| T-4.2 | Lighthouse baseline | TODO | | Run before anyone optimises, so there is a comparison point. |
+| T-4.3 | Verification pass after the game lands | TODO | | Blocked on Workstream G. |
+| T-4.4 | Pre launch pass | TODO | | Every outbound link resolves, no placeholder string survives, every fact has a ledger row. |
 
 ---
 
-## Open questions for Ananya
+# Open questions for Ananya
 
-1. **Timeline interaction: approve or redirect?** This is the gate on Impact and
-   on the remaining 20 entries. Specifically: entries stay fully expanded and
-   scroll only changes emphasis, rather than expanding and collapsing as you
-   pass them. That was deliberate, since auto expanding on scroll shifts the
-   page under a reader. Year groups collapse on click instead.
-2. **Bio copy.** Three draft lines on the homepage. Argue with them.
-3. **Pacifica passage.** Four draft lines. The tide rising through the type is
-   the creative moment, the words are a first pass.
-4. **Is "Download resume" the right third CTA** before the PDFs exist? It
-   currently points at the resume block on Contact.
+1. **Contact details.** Email, LinkedIn URL, GitHub URL, pasted here. Blocking.
+2. **The interview.** T-0.4. She chose this as the source of truth, so the
+   quality of the whole site now depends on it.
+3. **Which symbols?** The game needs roughly 18 real things and 6 convincing
+   decoys. Some come out of the biography, but her own list will be better than
+   anything derived.
+4. **How honest are the decoys?** A decoy that is obviously wrong is not fun. A
+   decoy that is nearly true is. How close to the bone can they go.

@@ -1,3 +1,25 @@
+/**
+ * ###########################################################################
+ * ## REJECTED CONTENT. DO NOT BUILD ON THIS. DO NOT CITE IT.               ##
+ * ###########################################################################
+ *
+ * Ananya reviewed this on 2026-09-03: "I hate all the content. It's inaccurate
+ * on so many levels."
+ *
+ * It was derived from Notion pages that contradict each other on dates, titles
+ * and numbers, and several of those pages are years stale. An agent resolved
+ * those conflicts by judgement instead of escalating them. That was the error.
+ *
+ * This file is quarantined until Workstream 0 in /HANDOFF.md replaces it
+ * wholesale from a sourced fact ledger plus an interview with Ananya.
+ *
+ * Do not patch these entries. Do not copy a bullet out of here into new code.
+ * Do not treat any date, metric or title below as true.
+ *
+ * The only thing worth salvaging is the set of URLs, which were copied from
+ * Notion verbatim and are probably still correct. Verify each one anyway.
+ */
+
 import type { Experience } from "@/lib/types";
 
 /**
