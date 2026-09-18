@@ -37,6 +37,32 @@ quarantined until Workstream 0 replaces it wholesale.
 
 ---
 
+# STOP: NETLIFY NO LONGER SERVES THE NEXT.JS SITE
+
+**Ananya, 2026-09-18, verbatim:** "keep everything that you have on Netlify
+right now. I don't want you to show any of that website, and I just want a
+simple single screen with this text... I want this to be pushed to the Netlify
+side, and nothing else."
+
+So as of now:
+
+- `netlify.toml` publishes **`site/`**, a single hand written `index.html`.
+  There is no build command at all.
+- The whole Next.js app, the game, the floating icons, the basket, the
+  scorecard: **all still in the repo, none of it deploys.** Nothing was
+  deleted. Do not delete anything.
+- **Do not point Netlify back at `out/` without asking her.** That is what
+  reverting this looks like, and she asked for the opposite.
+
+To restore the Next.js deploy later: `command = "npm run build"` and
+`publish = "out"` in `netlify.toml`. The comment at the top of that file says
+the same thing.
+
+Workstream G is not cancelled. It is just not what the domain serves today.
+
+
+---
+
 # FOR AN AGENT WITHOUT THE NOTION CONNECTOR
 
 Everything in **Workstream G** is yours. None of it needs Notion. The blocking
@@ -56,6 +82,14 @@ are quarantined rejected content and rebuilding them needs Notion plus Ananya.
 
 Tasks are tagged `[no-notion]` or `[needs-notion]` below.
 
+
+---
+
+# Workstream S: what Netlify actually serves
+
+| ID | Task | Status | Owner | Notes |
+| --- | --- | --- | --- | --- |
+| T-S.1 | Single page Netlify site | DONE | opus-5/014ecdjnxdyE | `site/index.html`, one file, no build step, no framework. Her long intro text verbatim, then a two column CSS masonry of 26 roles from 2018 to 2026 (title, company, dates), then a footnote with her contact details. Hover or tap a card and a one sentence first person note opens, all lowercase, per her spec. Every note is real HTML rather than injected by JavaScript, so the page works with JS off and a crawler reads all of it. Editing instructions are a comment at the top of the file: the prose, the cards and the footnote are each marked. Caught one real bug while building: the instruction comment contained `<!-- INTRO -->`, and HTML comments do not nest, so it terminated early and dumped the instructions into the page as visible content plus a phantom 27th card. |
 
 ---
 

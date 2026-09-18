@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ananya Shah</title>
+<meta name="description" content="Ananya Shah. Strategy and data, moving back toward building. Boston." />
+<link rel="canonical" href="https://ananya-personal.netlify.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ananya Shah" />
+<meta property="og:description" content="Strategy and data, moving back toward building." />
+<meta property="og:url" content="https://ananya-personal.netlify.app/" />
+<meta name="robots" content="index, follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!--
+  ===========================================================================
+  HOW TO EDIT THIS PAGE
+  ===========================================================================
+  Everything lives in this one file. There is no build step. Edit, save, push.
+
+  1. THE WRITING          Find the block marked INTRO below. Plain paragraphs.
+  2. THE TIMELINE         Find the block marked TIMELINE. One card button per
+                          role. Copy a card to add one, delete a card to remove
+                          one, move cards around to reorder.
+  3. YOUR DETAILS         Find the block marked FOOTNOTE.
+  4. ORDER                Cards appear in the order they are written.
+                          Newest first right now.
+
+  The hover sentences are lowercase on purpose. Keep them that way.
+  ===========================================================================
+-->
+
+<style>
+  :root {
+    --paper: #faf9f7;
+    --ink: #14140f;
+    --muted: #6b6860;
+    --faint: #a5a19a;
+    --rule: #e4e0d8;
+    --accent: #c2502f;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---------- the writing ---------- */
+
+  .intro { padding: 7rem 0 5rem; }
+
+  .intro p {
+    margin: 0 0 1.35em;
+    max-width: 38rem;
+    text-wrap: pretty;
+  }
+
+  .intro p:first-child {
+    font-size: 1.22rem;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+  }
+
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* ---------- timeline ---------- */
+
+  .timeline-head {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    margin-bottom: 2.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* There is no hover on a phone, so the hint has to say the right word. */
+  .pointer-coarse { display: none; }
+  @media (hover: none) {
+    .pointer-fine { display: none; }
+    .pointer-coarse { display: inline; }
+  }
+
+  .masonry {
+    columns: 1;
+    column-gap: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 40rem) { .masonry { columns: 2; } }
+
+  .card {
+    break-inside: avoid;
+    display: block;
+    width: 100%;
+    margin: 0 0 1.5rem;
+    padding: 0 0 1.25rem;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.35;
+  }
+
+  .card .co {
+    display: block;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .card .dates {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.8125rem;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The note is always in the HTML. It is revealed, not fetched. */
+  .clip {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .clip-in { overflow: hidden; }
+
+  .note {
+    margin: 0;
+    padding-top: 0.6rem;
+    font-size: 0.925rem;
+    line-height: 1.55;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.26s ease 0.06s;
+  }
+
+  .card:hover .clip,
+  .card:focus-visible .clip,
+  .card[aria-expanded="true"] .clip { grid-template-rows: 1fr; }
+
+  .card:hover .note,
+  .card:focus-visible .note,
+  .card[aria-expanded="true"] .note { opacity: 1; }
+
+  .card:hover h2,
+  .card:focus-visible h2,
+  .card[aria-expanded="true"] h2 { color: var(--accent); }
+
+  .card h2 { transition: color 0.2s ease; }
+
+  .card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* ---------- footnote ---------- */
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 1.75rem 0 4rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    align-items: baseline;
+  }
+
+  footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  footer .name { color: var(--ink); font-weight: 500; }
+  footer .spacer { margin-left: auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131310;
+      --ink: #f2efe9;
+      --muted: #9a958c;
+      --faint: #6f6b63;
+      --rule: #2c2b26;
+      --accent: #e0714c;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="wrap">
+
+  <!-- ===================== INTRO. Edit the writing here. ===================== -->
+  <section class="intro">
+    <p>Hi, my name is Ananya! Over the last year and a half, I&rsquo;ve been thinking a lot about what stands out in an increasingly agentic world. What skills become more valuable? How do I become truly AI-native? And, maybe more importantly, what kind of work do I actually enjoy?</p>
+
+    <p>I&rsquo;ve spent that time in strategy consulting, largely with my head down in data, analyzing it, finding the story in it, and packaging those insights for executives making decisions around million-dollar initiatives. The work has been intellectually challenging, but somewhere along the way I realized that the part I found most interesting wasn&rsquo;t necessarily the analysis itself. It was figuring out how we could work better.</p>
+
+    <p>I became the person constantly looking for ways to help my team move faster: fixing broken processes, automating repetitive work, and making the knowledge we already had easier to access and use. Eventually, I built a knowledge infrastructure system specifically for our brand of knowledge work that helped a 10-person team dramatically accelerate delivery and has since been used to onboard five new people in three months.</p>
+
+    <p>That experience clarified something for me: I really like finding problems and figuring out how people and technology can come together to solve them.</p>
+
+    <p>In hindsight, that instinct has been there for a long time. I studied Data Science and Finance at Northeastern, but I spent much of college building things and surrounding myself with other people who wanted to build. I competed in the Husky Startup Challenge and later became its director, participated in several accelerators on campus, and co-founded Rev, a community for builders. During my junior year, I also founded a company of my own and spent a year and a half building it, eventually leading an engineering team and almost raising a seed round.</p>
+
+    <p>Now, I&rsquo;m ready to take what I&rsquo;ve learned in consulting and get much closer to building again.</p>
+
+    <p>I want to operate at the intersection of people and technology. That could mean helping scale a fast-growing startup in a generalist go-to-market role, or sitting at the center of a scrappy product team, prototyping quickly and shipping alongside customers.</p>
+
+    <p>What I&rsquo;m looking for now is a company early enough that go-to-market is still a design problem rather than a playbook to execute, somewhere I can sit between product and customer and be accountable to both. I want real ownership rather than a small slice of someone else&rsquo;s roadmap. And, most importantly, I want to work alongside a small group of people who are exceptionally good at what they do, so that I&rsquo;m constantly being pushed to get better at what I do.</p>
+  </section>
+  <!-- =================== END INTRO =================== -->
+
+  <div class="timeline-head">
+    <p class="label">2018 to now</p>
+    <p class="label"><span class="pointer-fine">Hover</span><span class="pointer-coarse">Tap</span> for detail</p>
+  </div>
+
+  <!-- ===== TIMELINE. One <button class="card"> per role. Copy a block to add one. ===== -->
+  <div class="masonry">
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n0">
+        <h2>Strategy and Data Analyst<span class="co">Cartesian Consulting</span></h2>
+        <span class="dates">2025 to now</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n0">i sit inside a telecom&rsquo;s reliability data, find the story in it, and package it for executives deciding on million dollar initiatives.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n1">
+        <h2>Knowledge Infrastructure<span class="co">Cartesian Consulting</span></h2>
+        <span class="dates">2026</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n1">i built a knowledge system for our brand of knowledge work that sped up a ten person team and has since onboarded five new people in three months.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n2">
+        <h2>Co-Lead<span class="co">AI Collective Boston</span></h2>
+        <span class="dates">2025 to now</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n2">i run the boston chapter&rsquo;s programming, which mostly means filling rooms with the people actually building the tools.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n3">
+        <h2>Founder<span class="co">Leprechaun</span></h2>
+        <span class="dates">2026</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n3">i&rsquo;m building a matching engine that reads consulting experience as evidence of technical ability instead of throwing it away.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n4">
+        <h2>Builder<span class="co">Compound</span></h2>
+        <span class="dates">2026</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n4">i built a retention engine for small businesses that reads real point of sale history instead of asking owners to import a spreadsheet.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n5">
+        <h2>Founder<span class="co">Zero Clix</span></h2>
+        <span class="dates">2024 to now</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n5">i built an seo platform around a metric i named, llm surface share, for how often a brand shows up inside a model&rsquo;s answer.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n6">
+        <h2>Growth Lead<span class="co">Ping</span></h2>
+        <span class="dates">2025</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n6">i owned go to market at northeastern and stood up the campus ambassador program from nothing.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n7">
+        <h2>B.S. Data Science and Finance<span class="co">Northeastern University</span></h2>
+        <span class="dates">2020 to 2025</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n7">i studied data science and finance, and spent most of it building things and finding other people who wanted to build.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n8">
+        <h2>Entrepreneur in Residence<span class="co">Sherman Center</span></h2>
+        <span class="dates">2024 to 2025</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n8">i mentored four venture co-ops and built the tool they actually report progress in, because the doc nobody updates is how these programs die.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n9">
+        <h2>Tech Product Manager<span class="co">Tyle.ai</span></h2>
+        <span class="dates">2024 to 2025</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n9">i ran the user research and built the prototype for automating rfp workflows for construction ngos.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n10">
+        <h2>Co-Founder<span class="co">Rev</span></h2>
+        <span class="dates">2024</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n10">i co-founded a community for builders, because the people i wanted to be around needed somewhere to be.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n11">
+        <h2>Managing Director<span class="co">Huntington Angels Network</span></h2>
+        <span class="dates">2024 to 2025</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n11">i ran the student angel network and wrote a python algorithm to route ventures to the investors most likely to take the meeting.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n12">
+        <h2>Co-Founder and CTO<span class="co">FindHer</span></h2>
+        <span class="dates">2023 to 2024</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n12">i founded a jobs platform for women in india, led the engineering team for a year and a half, and got close to raising a seed round.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n13">
+        <h2>Director<span class="co">Husky Startup Challenge</span></h2>
+        <span class="dates">2023</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n13">i rebuilt the accelerator curriculum for the program i had competed in the year before.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n14">
+        <h2>Teaching Assistant, Intro to Data Science<span class="co">Northeastern University</span></h2>
+        <span class="dates">2023</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n14">i taught first python to people who had never written a line of code.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n15">
+        <h2>Junior Associate to Vice President<span class="co">Huntington Angels Network</span></h2>
+        <span class="dates">2022 to 2023</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n15">i led due diligence teams and built the relationships between northeastern founders and the investors who fund them.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n16">
+        <h2>Business Development Analyst, Co-op<span class="co">Hercules Capital</span></h2>
+        <span class="dates">2022</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n16">i researched investment opportunities at a public venture lender and automated the deal intake so nobody had to log it by hand.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n17">
+        <h2>Founder<span class="co">Social Frame</span></h2>
+        <span class="dates">2022</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n17">i built ai social media optimization for small business owners and pitched it at demo day as a finalist.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n18">
+        <h2>Teaching Assistant, Business Calculus<span class="co">Northeastern University</span></h2>
+        <span class="dates">2021 to 2022</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n18">i taught business calculus across two semesters.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n19">
+        <h2>Founder<span class="co">Likd by Anyu</span></h2>
+        <span class="dates">2021</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n19">i turned the social playbook that scaled bindu into a paid service for small business owners.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n20">
+        <h2>Business Consultant and Community Manager<span class="co">Dogspotted</span></h2>
+        <span class="dates">2021</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n20">i ran social strategy for an early stage consumer startup through its second launch.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n21">
+        <h2>Social Media Director<span class="co">Entrepreneurs Club, Northeastern</span></h2>
+        <span class="dates">2021</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n21">i ran content for the largest student entrepreneurship organization on campus.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n22">
+        <h2>President and Co-Founder<span class="co">Bindu</span></h2>
+        <span class="dates">2020 to 2022</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n22">i founded a non profit against period poverty in india, raised over thirty thousand dollars, and grew it to seventy five people across four teams.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n23">
+        <h2>Entrepreneur and Fellow<span class="co">DMZ Sandbox, Ryerson University</span></h2>
+        <span class="dates">2019</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n23">i pitched a coffee cup lined with lignin instead of plastic, and got my first look inside an incubator.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n24">
+        <h2>Programming Intern<span class="co">Enterpi Solutions</span></h2>
+        <span class="dates">2018</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n24">i was sixteen and i built a workout app in react native that pulled routines out of youtube.</span></span></span>
+      </button>
+
+      <button class="card" type="button" aria-expanded="false" aria-controls="n25">
+        <h2>Second Place<span class="co">TiE Young Entrepreneurs</span></h2>
+        <span class="dates">2018</span>
+        <span class="clip"><span class="clip-in"><span class="note" id="n25">i pitched a temperature sensitive coffee cup and came second, which is where the whole cup obsession started.</span></span></span>
+      </button>
+
+  </div>
+  <!-- ===== END TIMELINE ===== -->
+
+</main>
+
+<!-- ===================== FOOTNOTE. Your details. ===================== -->
+<div class="wrap">
+  <footer>
+    <span class="name">Ananya Shah</span>
+    <a href="mailto:anyushah@gmail.com">anyushah@gmail.com</a>
+    <a href="https://www.linkedin.com/in/anyushah" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/Anyueow" target="_blank" rel="noopener">GitHub</a>
+    <span class="spacer">Boston, MA</span>
+  </footer>
+</div>
+<!-- =================== END FOOTNOTE =================== -->
+
+<script>
+/* Hover handles mouse. This handles tap, where hover does not exist, and
+   keeps the cards operable by keyboard. Nothing renders here: every role is
+   real HTML above, so the page works with JavaScript off and a crawler can
+   read all of it. */
+document.querySelector(".masonry").addEventListener("click", function (e) {
+  var card = e.target.closest(".card");
+  if (!card) return;
+  card.setAttribute("aria-expanded", card.getAttribute("aria-expanded") === "true" ? "false" : "true");
+});
+</script>
+
+</body>
+</html>
