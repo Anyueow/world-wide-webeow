@@ -52,10 +52,10 @@ export function Timeline({ groups }: { groups: { year: number; items: Experience
   }, []);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[7rem_1fr] lg:gap-16">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[4rem_minmax(0,1fr)] lg:gap-8">
       <YearRail years={groups.map((group) => group.year)} />
 
-      <div ref={trackRef} className="relative">
+      <div ref={trackRef} className="relative min-w-0">
         {/* The spine. A static hairline with a coral fill that tracks scroll. */}
         <div
           aria-hidden="true"

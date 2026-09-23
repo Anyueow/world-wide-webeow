@@ -64,7 +64,7 @@ export function TimelineEntry({
     <motion.article
       ref={ref}
       id={experience.id}
-      className="relative scroll-mt-32 py-6 pl-8 sm:pl-12 lg:py-8 lg:pl-16"
+      className="relative min-w-0 wrap-anywhere scroll-mt-32 py-6 pl-8 sm:pl-12 lg:py-8 lg:pl-16"
       style={{
         contentVisibility: "auto",
         containIntrinsicSize: "auto 420px",
@@ -93,7 +93,7 @@ export function TimelineEntry({
         />
       </span>
 
-      <div className="grid gap-5 lg:grid-cols-12 lg:gap-8">
+      <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-8">
         <div
           className={
             hasPhoto

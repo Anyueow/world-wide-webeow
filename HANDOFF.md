@@ -345,8 +345,12 @@ T-G.15 complete: hero uses the exact supplied description, obsolete location/bui
 
 ## T-G.16: Centered layout and consistent spacing
 
-Status: IN PROGRESS. Owner: Codex.
+Status: DONE. Owner: Codex.
 
 Ananya, verbatim: "Also not the biggest fan of the weird padding and the left-aligned text. Just make everything a bit more central and no weird spacing. Why does it say \"the camera\" or why is it occupying a different line each time? That's weird"
 
 Center hero and section introductions, use a narrower shared frame, reduce vertical spacing, and replace the constrained camera-roll heading with Photos. Keep detailed experience text readable within the centered frame.
+
+Additional instructions, verbatim: "Remove the photos section" and "Push all the code to GitHub". Remove both camera-roll intro and gallery from the page and its nav entry, redistribute all collectibles across the four remaining fields, and push the completed changes.
+
+T-G.16 complete: narrower centered containers; centered hero, section introductions, contact and footer; compact portrait; natural single-line name; smaller headings; consistent shorter spacing. Removed the photos intro/gallery and nav link. Redistributed all 21 game objects across four sections. Fixed mobile timeline overflow with explicit minmax grid tracks, min-width zero and wrapping. Build, lint, TypeScript pass. Browser checks and screenshots verified at 390px and 1440px, including no horizontal overflow and all collectibles present. For screenshot QA only, the local preview routed the existing Netlify image-loader URL to the repository portrait because Python's static server has no Netlify CDN endpoint.

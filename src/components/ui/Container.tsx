@@ -11,13 +11,13 @@ export function Container({
 }) {
   const max =
     width === "wide"
-      ? "max-w-[104rem]"
+      ? "max-w-[72rem]"
       : width === "prose"
         ? "max-w-[46rem]"
-        : "max-w-[78rem]";
+        : "max-w-[64rem]";
 
   return (
-    <div className={`mx-auto w-full ${max} px-6 sm:px-10 lg:px-14 ${className}`}>
+    <div className={`mx-auto w-full ${max} px-5 sm:px-8 ${className}`}>
       {children}
     </div>
   );

@@ -14,7 +14,6 @@ export const site = {
  * just jumps to a section id on the same document instead of navigating.
  */
 export const nav = [
-  { label: "Who am I", href: "#who-am-i" },
   { label: "Experiences", href: "#experiences" },
   { label: "Impact", href: "#impact" },
   { label: "Contact", href: "#contact" },

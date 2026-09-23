@@ -17,7 +17,7 @@ export function RevealAll() {
   if (gamePreference === false) return null;
 
   return (
-    <details className="mt-10 max-w-[60ch] border-t border-dune pt-6">
+    <details className="mx-auto mt-6 max-w-[60ch] border-t border-dune pt-6">
       <summary className="text-micro cursor-pointer text-ocean-soft hover:text-coral">
         Skip the game, show me everything
       </summary>
