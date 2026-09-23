@@ -297,3 +297,22 @@ to verify server rendered content. Notion MCP to re-read what it checks against.
    anything derived.
 4. **How honest are the decoys?** A decoy that is obviously wrong is not fun. A
    decoy that is nearly true is. How close to the bone can they go.
+
+
+## T-G.13: Visitor game choice and collected objects
+
+Status: IN PROGRESS. Owner: Codex. Claimed: 2026-09-23T02:50:15.320154+00:00
+
+Ananya's request, verbatim:
+
+> Add a quick pop-up when someone visits the website saying:
+>
+> "Hi, my name is Ananya and this is a personal website about me. There is a quick game scattered throughout the website if you want to learn more about me. It's essentially collecting objects that help you get to know me better.
+>
+> If you don't want to participate and just want a clean look at my website, you can click here and say, 'I don't want to play a game.' All the animated objects throughout the website will be removed."
+>
+> That's the pop-up. If they click "No, I want to participate" or "I don't want to participate," make sure you scrub the game off entirely. Also have that as a toggle feature at the bottom near the basket, saying "Turn on game" and "Turn off game."
+>
+> Once the person collects the object I don't want the object to be lying around on the website. Remove that
+
+Implementation interpretation: the participate action enables the game; declining removes all game UI except the persistent re-enable control. Keep progress when toggling. Apply to the preserved Next.js game app; deployment restoration is pending explicit direction because Netlify currently publishes site/.
