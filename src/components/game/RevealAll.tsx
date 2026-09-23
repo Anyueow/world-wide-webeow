@@ -1,3 +1,6 @@
+"use client";
+
+import { useGame } from "@/components/game/GameProvider";
 import { gameItems } from "@/content/game-items";
 
 /**
@@ -6,12 +9,13 @@ import { gameItems } from "@/content/game-items";
  * JavaScript at all, since the site is a static export.
  *
  * <details>/<summary> is a real native disclosure widget: it needs zero JS to
- * open, it is keyboard and screen reader accessible for free, and because it
- * is not client state, its content is in the server rendered HTML from the
- * start rather than appearing only after hydration. That is the whole reason
- * this is not a useState-driven component.
+ * open and its content is in the initial server HTML. A saved opt-out removes
+ * this game disclosure after hydration along with the other game UI.
  */
 export function RevealAll() {
+  const { gamePreference } = useGame();
+  if (gamePreference === false) return null;
+
   return (
     <details className="mt-10 max-w-[60ch] border-t border-dune pt-6">
       <summary className="text-micro cursor-pointer text-ocean-soft hover:text-coral">

@@ -45,11 +45,13 @@ export function FloatingIcon({
   quadrant: number;
   quadrantCount: number;
 }) {
-  const { collectedIds, attemptedIds, collect } = useGame();
+  const { gameEnabled, collectedIds, attemptedIds, collect } = useGame();
   const reduceMotion = useReducedMotion();
   const collected = collectedIds.has(item.id);
   const attempted = attemptedIds.has(item.id);
   const { rotate, left, top } = positionFor(item.id, quadrant, quadrantCount);
+
+  if (!gameEnabled || attempted) return null;
 
   return (
     <button

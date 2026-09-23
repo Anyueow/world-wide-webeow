@@ -301,7 +301,7 @@ to verify server rendered content. Notion MCP to re-read what it checks against.
 
 ## T-G.13: Visitor game choice and collected objects
 
-Status: IN PROGRESS. Owner: Codex. Claimed: 2026-09-23T02:50:15.320154+00:00
+Status: DONE. Owner: Codex. Claimed: 2026-09-23T02:50:15.320154+00:00
 
 Ananya's request, verbatim:
 
@@ -316,3 +316,13 @@ Ananya's request, verbatim:
 > Once the person collects the object I don't want the object to be lying around on the website. Remove that
 
 Implementation interpretation: the participate action enables the game; declining removes all game UI except the persistent re-enable control. Keep progress when toggling. Apply to the preserved Next.js game app; deployment restoration is pending explicit direction because Netlify currently publishes site/.
+
+Additional requests, verbatim: "remove this section entirely" (screenshot of What I am into), and "remove the pacifica section as well". Remove both sections from the Next.js page and redistribute collectibles.
+
+Additional request, verbatim: "Move the experience section above the photos section". Move the Experiences heading and timeline together before the camera-roll introduction.
+
+Validation found a pre-existing reduced-motion hydration mismatch in src/app/template.tsx: it changes the server-rendered wrapper tree when useReducedMotion becomes true. Tracked as TODO T-G.14; independent of the requested game preference changes. Local static preview also cannot serve Netlify Image CDN URLs (existing loader). Standard-motion game interaction checks passed at 390px and 1440px.
+
+T-G.13 implementation: GameWelcome uses a native modal dialog with the supplied copy, participate/decline choices, keyboard focus trapping, and Escape opting out. GameProvider and game-storage persist the preference independently of collection progress. GameBasket keeps the on/off control available while all game UI and introductory game copy disappear when disabled. FloatingIcon removes attempted objects, including decoys, while results remain in the scorecard. Fixed the hydration-time progress save race by gating saves with loaded state. page.tsx removes What I am into and Pacifica, moves Experiences before the camera roll, and distributes all 21 collectibles across six fields. Netlify still publishes site/ pending a deployment decision.
+
+Verification: production build, ESLint and TypeScript pass. Browser interactions and modal screenshots checked at 390px and 1440px: both choices, off/on, progress persistence, removal after collection, scorecard cleanup, section removal and order. Existing reduced-motion hydration issue and local Netlify image-loader 404s are noted above, not introduced by this change.

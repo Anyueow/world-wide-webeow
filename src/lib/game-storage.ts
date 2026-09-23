@@ -44,3 +44,22 @@ export function saveProgress(progress: StoredProgress): void {
     // Storage full, blocked, or unavailable. Progress just does not persist.
   }
 }
+
+const PREFERENCE_KEY = "game-enabled";
+
+export function loadGamePreference(): boolean | null {
+  try {
+    const value = window.localStorage.getItem(PREFERENCE_KEY);
+    return value === "true" ? true : value === "false" ? false : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveGamePreference(enabled: boolean): void {
+  try {
+    window.localStorage.setItem(PREFERENCE_KEY, String(enabled));
+  } catch {
+    // The current visit still works when browser storage is unavailable.
+  }
+}

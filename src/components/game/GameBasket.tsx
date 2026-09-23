@@ -1,5 +1,6 @@
 "use client";
 
+import { gameWelcome } from "@/content/game-welcome";
 import { motion, useReducedMotion } from "framer-motion";
 import { useGame } from "@/components/game/GameProvider";
 import { Scorecard } from "@/components/game/Scorecard";
@@ -10,16 +11,22 @@ import { Scorecard } from "@/components/game/Scorecard";
  * animation, transform and opacity only.
  */
 export function GameBasket() {
-  const { collectedIds, attemptedIds, trueItemCount, basketOpen, toggleBasket, basketRef } =
+  const { gameEnabled, setGameEnabled, collectedIds, attemptedIds, trueItemCount, basketOpen, toggleBasket, basketRef } =
     useGame();
   const reduceMotion = useReducedMotion();
   const count = collectedIds.size;
 
   return (
     <div className="fixed right-4 bottom-4 z-40 flex flex-col items-end gap-3 sm:right-8 sm:bottom-8">
-      {basketOpen ? <Scorecard /> : null}
+      {gameEnabled && basketOpen ? <Scorecard /> : null}
 
-      <motion.button
+      <div className="flex items-center gap-3">
+        <button type="button" onClick={() => setGameEnabled(!gameEnabled)}
+          aria-pressed={gameEnabled}
+          className="min-h-11 rounded-full border border-dune bg-sand px-4 py-2 text-sm text-ink shadow-sm focus-visible:outline-2 focus-visible:outline-coral">
+          {gameEnabled ? gameWelcome.turnOff : gameWelcome.turnOn}
+        </button>
+      {gameEnabled ? <motion.button
         ref={basketRef}
         type="button"
         onClick={toggleBasket}
@@ -35,7 +42,8 @@ export function GameBasket() {
         <span className="absolute -top-1 -right-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-coral px-1.5 text-[0.75rem] font-semibold text-sand">
           {count}
         </span>
-      </motion.button>
+      </motion.button> : null}
+      </div>
     </div>
   );
 }

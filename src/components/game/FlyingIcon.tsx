@@ -12,7 +12,7 @@ import { PixelIcon } from "@/components/game/PixelIcon";
  * instantly in GameProvider, this is purely the cosmetic flourish on top.
  */
 export function FlyingIcon() {
-  const { flight, clearFlight, basketRef } = useGame();
+  const { gameEnabled, flight, clearFlight, basketRef } = useGame();
   const reduceMotion = useReducedMotion();
   const [toRect, setToRect] = useState<DOMRect | null>(null);
 
@@ -26,7 +26,7 @@ export function FlyingIcon() {
     }
   }, [flight, basketRef]);
 
-  if (!flight || reduceMotion || !toRect) return null;
+  if (!gameEnabled || !flight || reduceMotion || !toRect) return null;
 
   const item = itemById(flight.itemId);
   if (!item) return null;

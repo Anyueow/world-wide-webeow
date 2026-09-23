@@ -11,7 +11,7 @@ import {
   type RefObject,
 } from "react";
 import { gameItems, trueItemCount } from "@/content/game-items";
-import { loadProgress, saveProgress } from "@/lib/game-storage";
+import { loadProgress, saveProgress, loadGamePreference, saveGamePreference } from "@/lib/game-storage";
 
 export type FlightRequest = {
   itemId: string;
@@ -19,6 +19,10 @@ export type FlightRequest = {
 };
 
 type GameContextValue = {
+  gameEnabled: boolean;
+  gamePreference: boolean | null;
+  welcomeOpen: boolean;
+  setGameEnabled: (enabled: boolean) => void;
   collectedIds: Set<string>;
   attemptedIds: Set<string>;
   trueItemCount: number;
@@ -48,7 +52,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [flight, setFlight] = useState<FlightRequest | null>(null);
   const [lastOpenedId, setLastOpenedId] = useState<string | null>(null);
   const basketRef = useRef<HTMLButtonElement | null>(null);
-  const hasLoaded = useRef(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [gamePreference, setGamePreference] = useState<boolean | null>(null);
+  const gameEnabled = hasLoaded && gamePreference === true;
 
   // Loaded after mount, client only, deliberately. The initial render must
   // match the server (empty) or React flags a hydration mismatch, so this
@@ -63,20 +69,30 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setCollectedIds(new Set(stored.collected));
       setAttemptedIds(new Set(stored.attempted));
     }
-    hasLoaded.current = true;
+    setGamePreference(loadGamePreference());
+    setHasLoaded(true);
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
-    if (!hasLoaded.current) return;
+    if (!hasLoaded) return;
     saveProgress({
       collected: Array.from(collectedIds),
       attempted: Array.from(attemptedIds),
     });
-  }, [collectedIds, attemptedIds]);
+  }, [collectedIds, attemptedIds, hasLoaded]);
+
+  const setGameEnabled = useCallback((enabled: boolean) => {
+    setGamePreference(enabled);
+    saveGamePreference(enabled);
+    setBasketOpen(false);
+    setFlight(null);
+    setLastOpenedId(null);
+  }, []);
 
   const collect = useCallback(
     (itemId: string, kind: "true" | "decoy", fromRect: DOMRect) => {
+      if (!gameEnabled || attemptedIds.has(itemId)) return;
       setLastOpenedId(itemId);
       setAttemptedIds((prev) => {
         if (prev.has(itemId)) return prev;
@@ -96,7 +112,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       setFlight({ itemId, fromRect });
     },
-    [],
+    [gameEnabled, attemptedIds],
   );
 
   const clearFlight = useCallback(() => setFlight(null), []);
@@ -106,6 +122,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   return (
     <GameContext.Provider
       value={{
+        gameEnabled,
+        gamePreference,
+        welcomeOpen: hasLoaded && gamePreference === null,
+        setGameEnabled,
         collectedIds,
         attemptedIds,
         trueItemCount,
@@ -134,4 +154,10 @@ export function useGame(): GameContextValue {
 
 export function itemById(id: string) {
   return gameItems.find((item) => item.id === id) ?? null;
+}
+
+/** Keep introductory game copy out of the clean reading view. */
+export function GameOnly({ children }: { children: ReactNode }) {
+  const { gameEnabled } = useGame();
+  return gameEnabled ? children : null;
 }

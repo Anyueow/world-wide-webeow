@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { Hero } from "@/components/home/Hero";
-import { GameProvider } from "@/components/game/GameProvider";
+import { GameWelcome } from "@/components/game/GameWelcome";
+import { GameProvider, GameOnly } from "@/components/game/GameProvider";
 import { GameFloatingField } from "@/components/game/GameFloatingField";
 import { GameBasket } from "@/components/game/GameBasket";
 import { FlyingIcon } from "@/components/game/FlyingIcon";
@@ -12,8 +13,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { VariableText } from "@/components/motion/VariableText";
 import { Timeline } from "@/components/experiences/Timeline";
 import { CameraRollGrid } from "@/components/whoami/CameraRollGrid";
-import { PacificaTide } from "@/components/whoami/PacificaTide";
-import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
@@ -26,16 +25,6 @@ const whoAmIIntro = [
   "You learn more about me from my camera roll than from my resume.",
   "There is over a terabyte of it, going back years, almost none of it sorted. Runs, sets, airports, dinners I hosted, dogs I met once. It is the honest version.",
   "Here is a slice.",
-];
-
-/** DRAFT. Enumerated, so bullets are the right call here. */
-const intoIt = [
-  "Running, most mornings",
-  "DJing, badly at first",
-  "Thirteen countries so far",
-  "Hosting people, feeding people",
-  "LLMs, interpretability, agentic systems",
-  "Animal rights and the climate, seriously",
 ];
 
 /** Ananya's words, verbatim. Do not smooth this out. */
@@ -86,16 +75,9 @@ function personJsonLd() {
   };
 }
 
-/**
- * 21 items sliced into 7 groups of 3, one group per major section, so the
- * icons read as sprinkled through the whole page (T-G.11) rather than boxed
- * into one game board. Sequential slicing, not random per render: the split
- * only has to look reasonably even, and it must be identical on the server
- * and the client.
- */
-const GAME_GROUP_SIZE = 3;
+/** Distribute all objects across the six remaining sections. */
 function gameGroup(index: number) {
-  return gameItems.slice(index * GAME_GROUP_SIZE, (index + 1) * GAME_GROUP_SIZE);
+  return gameItems.filter((_, itemIndex) => itemIndex % 6 === index);
 }
 
 export default function HomePage() {
@@ -120,11 +102,13 @@ export default function HomePage() {
 
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7 lg:col-start-1">
+              <GameOnly>
               <p className="text-micro text-ocean-soft">Two truths and a lie</p>
               <p className="mt-2 max-w-[52ch] text-[0.9rem] text-ink-faint">
                 A few of the things floating on this page are really her. A few
                 are not. Click one to find out.
               </p>
+              </GameOnly>
 
               {bio.map((line, index) => (
                 <Reveal key={line} delay={index * 0.08}>
@@ -149,6 +133,44 @@ export default function HomePage() {
               <RevealAll />
             </div>
           </div>
+        </Container>
+      </section>
+
+      <section
+        id="experiences"
+        aria-labelledby="experiences-heading"
+        className="relative scroll-mt-24 border-t border-dune pt-24 pb-12"
+      >
+        <GameFloatingField items={gameGroup(3)} />
+        <Container width="wide">
+          <p className="text-micro text-ocean-soft">
+            {groups[groups.length - 1]?.year} to {groups[0]?.year}
+          </p>
+
+          <h2 id="experiences-heading" className="mt-6">
+            <VariableText as="span" className="display-face text-display block text-ink">
+              Experiences
+            </VariableText>
+          </h2>
+
+          <Reveal delay={0.1}>
+            <p className="text-lede mt-10 max-w-[62ch] text-ink-soft">
+              {experiencesOpening}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-micro mt-10 text-ink-faint">
+              {experienceCount} of roughly 25 entries. The rest land once the
+              interaction design is signed off.
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section aria-label="Timeline" className="pb-20">
+        <Container width="wide">
+          <Timeline groups={groups} />
         </Container>
       </section>
 
@@ -186,81 +208,12 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <PacificaTide />
-
-      <section aria-labelledby="into-heading" className="relative border-t border-dune py-24">
-        <GameFloatingField items={gameGroup(3)} />
-        <Container width="wide">
-          <h3 id="into-heading" className="text-micro text-ocean-soft">
-            What I am into
-          </h3>
-          <ul className="mt-8 grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
-            {intoIt.map((item, index) => (
-              <Reveal as="li" key={item} delay={index * 0.05}>
-                <span className="display-face block border-b border-dune pb-3 text-[clamp(1.1rem,2vw,1.5rem)] tracking-tight text-ink">
-                  {item}
-                </span>
-              </Reveal>
-            ))}
-          </ul>
-
-          <Reveal delay={0.2}>
-            <p className="text-lede mt-14 max-w-[46ch] text-ink-soft">
-              The work version of all this is on the timeline.
-            </p>
-            <div className="mt-4">
-              <ArrowLink href="#experiences" tone="coral">
-                Go to experiences
-              </ArrowLink>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section
-        id="experiences"
-        aria-labelledby="experiences-heading"
-        className="relative scroll-mt-24 border-t border-dune pt-24 pb-12"
-      >
-        <GameFloatingField items={gameGroup(4)} />
-        <Container width="wide">
-          <p className="text-micro text-ocean-soft">
-            {groups[groups.length - 1]?.year} to {groups[0]?.year}
-          </p>
-
-          <h2 id="experiences-heading" className="mt-6">
-            <VariableText as="span" className="display-face text-display block text-ink">
-              Experiences
-            </VariableText>
-          </h2>
-
-          <Reveal delay={0.1}>
-            <p className="text-lede mt-10 max-w-[62ch] text-ink-soft">
-              {experiencesOpening}
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <p className="text-micro mt-10 text-ink-faint">
-              {experienceCount} of roughly 25 entries. The rest land once the
-              interaction design is signed off.
-            </p>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section aria-label="Timeline" className="pb-20">
-        <Container width="wide">
-          <Timeline groups={groups} />
-        </Container>
-      </section>
-
       <section
         id="impact"
         aria-labelledby="impact-heading"
         className="relative scroll-mt-24 border-t border-dune pt-24 pb-24"
       >
-        <GameFloatingField items={gameGroup(5)} />
+        <GameFloatingField items={gameGroup(4)} />
         <Container width="wide">
           <p className="text-micro text-ocean-soft">Impact</p>
 
@@ -317,7 +270,7 @@ export default function HomePage() {
         aria-labelledby="contact-heading"
         className="relative scroll-mt-24 border-t border-dune pt-24 pb-24"
       >
-        <GameFloatingField items={gameGroup(6)} />
+        <GameFloatingField items={gameGroup(5)} />
         <Container width="default">
           <p className="text-micro text-ocean-soft">Contact</p>
 
@@ -398,6 +351,7 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <GameWelcome />
       <GameBasket />
       <FlyingIcon />
       <GameToast />

@@ -10,9 +10,11 @@ import { itemById, useGame } from "@/components/game/GameProvider";
  * inline in. One shared toast instead of a panel per icon.
  */
 export function GameToast() {
-  const { lastOpenedId } = useGame();
+  const { gameEnabled, lastOpenedId } = useGame();
   const reduceMotion = useReducedMotion();
   const item = lastOpenedId ? itemById(lastOpenedId) : null;
+
+  if (!gameEnabled) return null;
 
   return (
     <div
