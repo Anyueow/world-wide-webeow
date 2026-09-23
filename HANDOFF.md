@@ -326,3 +326,13 @@ Validation found a pre-existing reduced-motion hydration mismatch in src/app/tem
 T-G.13 implementation: GameWelcome uses a native modal dialog with the supplied copy, participate/decline choices, keyboard focus trapping, and Escape opting out. GameProvider and game-storage persist the preference independently of collection progress. GameBasket keeps the on/off control available while all game UI and introductory game copy disappear when disabled. FloatingIcon removes attempted objects, including decoys, while results remain in the scorecard. Fixed the hydration-time progress save race by gating saves with loaded state. page.tsx removes What I am into and Pacifica, moves Experiences before the camera roll, and distributes all 21 collectibles across six fields. Netlify still publishes site/ pending a deployment decision.
 
 Verification: production build, ESLint and TypeScript pass. Browser interactions and modal screenshots checked at 390px and 1440px: both choices, off/on, progress persistence, removal after collection, scorecard cleanup, section removal and order. Existing reduced-motion hydration issue and local Netlify image-loader 404s are noted above, not introduced by this change.
+
+## T-G.15: Simple description and single resume
+
+Status: IN PROGRESS. Owner: Codex.
+
+Ananya, verbatim: "And also the weird subtitle that says \"in Boston builder since 2018\": don't need any of that. Also remove \"curiouser and curiouser.\" My description should just say: passionate builder, currently professionally telling stories with data"
+
+Additional request, verbatim: "Also just have a single resume. I don't want three multiple resumes"
+
+Use her exact sentence as the hero and metadata description, remove the old introductory bio, and expose one general resume slot. No resume PDF exists in public/ yet. Working from a fresh clone because the Desktop checkout's Git pack could not be read reliably.
