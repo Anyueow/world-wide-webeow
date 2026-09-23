@@ -342,3 +342,11 @@ Additional request: shorten and sharpen the welcome modal around two truths and 
 Additional request: replace Experiences opening verbatim with: "I've always been actively involved and passionate about everything that I do. One thing that I've been accused of is putting my 110% into everything, even things that may not require it. This is why my experience starts all the way from a little bit before high school to now, so you see the full picture if you want!"
 
 T-G.15 complete: hero uses the exact supplied description, obsolete location/building-since line and old tagline/bio removed, metadata uses the new description. One general resume slot points to /resume/ananya-shah.pdf (not supplied yet). Welcome reduced to one paragraph and Play the game / Just browse buttons. Experiences opening uses Ananya's latest exact text. Build, lint and TypeScript pass; welcome and hero inspected at 390px and 1440px; one unavailable resume slot verified. Netlify configuration unchanged.
+
+## T-G.16: Centered layout and consistent spacing
+
+Status: IN PROGRESS. Owner: Codex.
+
+Ananya, verbatim: "Also not the biggest fan of the weird padding and the left-aligned text. Just make everything a bit more central and no weird spacing. Why does it say \"the camera\" or why is it occupying a different line each time? That's weird"
+
+Center hero and section introductions, use a narrower shared frame, reduce vertical spacing, and replace the constrained camera-roll heading with Photos. Keep detailed experience text readable within the centered frame.
