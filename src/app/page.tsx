@@ -16,7 +16,7 @@ import { CameraRollGrid } from "@/components/whoami/CameraRollGrid";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
-import { bio, contact, resumes, site } from "@/content/site";
+import { contact, resumes, site } from "@/content/site";
 import { experiencesByYear, sortedExperiences } from "@/content/experiences";
 import { impactItems } from "@/content/impact";
 
@@ -29,7 +29,7 @@ const whoAmIIntro = [
 
 /** Ananya's words, verbatim. Do not smooth this out. */
 const experiencesOpening =
-  "I've always been actively involved and passionate about everything that I do. One thing that I've been accused of is putting my 110% into everything, even things that may not require it. This is why my experience starts all the way from a little bit before high school to now, because you need the full picture if you want to understand the kind of person I am. I'm multifaceted and my passion for my work and the communities that I build runs deep.";
+  "I've always been actively involved and passionate about everything that I do. One thing that I've been accused of is putting my 110% into everything, even things that may not require it. This is why my experience starts all the way from a little bit before high school to now, so you see the full picture if you want!";
 
 /**
  * Checked at build time, not in the browser. A resume only gets a download
@@ -109,14 +109,6 @@ export default function HomePage() {
                 are not. Click one to find out.
               </p>
               </GameOnly>
-
-              {bio.map((line, index) => (
-                <Reveal key={line} delay={index * 0.08}>
-                  <p className="text-lede mt-6 mb-4 max-w-[52ch] text-ink-soft">
-                    {line}
-                  </p>
-                </Reveal>
-              ))}
 
               <Reveal delay={0.24}>
                 <div className="mt-10 flex flex-wrap gap-3">
@@ -327,9 +319,6 @@ export default function HomePage() {
                         >
                           <span className="display-face text-[1.35rem] tracking-tight text-ink transition-colors group-hover:text-coral">
                             {resume.label}
-                          </span>
-                          <span className="text-[0.85rem] text-ink-soft">
-                            {resume.description}
                           </span>
                         </a>
                       ) : (

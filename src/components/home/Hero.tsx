@@ -52,11 +52,7 @@ export function Hero() {
       </motion.div>
 
       <Container width="wide">
-        <p className="text-micro text-ocean-soft">
-          Boston, Massachusetts. Building since 2018.
-        </p>
-
-        <h1 className="mt-6 max-w-[16ch]">
+        <h1 className="max-w-[16ch]">
           <VariableText
             as="span"
             className="display-face text-hero block text-ink"
@@ -71,19 +67,10 @@ export function Hero() {
           >
             Shah
           </VariableText>
-          <span className="sr-only">, {site.tagline}</span>
         </h1>
 
-        <p aria-hidden="true" className="mt-6">
-          <VariableText
-            as="span"
-            className="display-face text-display block text-coral italic"
-            delay={0.4}
-            from={{ soft: 0, wonk: 0, wght: 300, opsz: 96 }}
-            to={{ soft: 100, wonk: 1, wght: 300, opsz: 144 }}
-          >
-            {site.tagline}
-          </VariableText>
+        <p className="text-lede mt-6 max-w-[42ch] text-ink-soft">
+          {site.description}
         </p>
 
         {/* Caricature on small screens, where there is no room beside the type. */}

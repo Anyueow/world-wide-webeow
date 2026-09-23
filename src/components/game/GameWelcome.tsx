@@ -25,12 +25,11 @@ export function GameWelcome() {
 
   return (
     <dialog ref={dialogRef} aria-labelledby="game-welcome-title"
-      aria-describedby="game-welcome-intro game-welcome-choice"
+      aria-describedby="game-welcome-intro"
       onCancel={(event) => { event.preventDefault(); setGameEnabled(false); }}
       className="fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-dune bg-sand p-6 text-ink shadow-xl backdrop:bg-ink/40 sm:p-8">
       <h2 id="game-welcome-title" className="display-face text-2xl">{gameWelcome.title}</h2>
       <p id="game-welcome-intro" className="mt-5 text-base leading-relaxed text-ink-soft">{gameWelcome.introduction}</p>
-      <p id="game-welcome-choice" className="mt-4 text-base leading-relaxed text-ink-soft">{gameWelcome.choice}</p>
       <div className="mt-6 flex flex-col gap-3">
         <button type="button" onClick={() => setGameEnabled(true)}
           className="min-h-11 rounded-full bg-ink px-5 py-3 text-sand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral">{gameWelcome.participate}</button>

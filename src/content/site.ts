@@ -2,31 +2,12 @@ import type { PhotoSlot, ResumeVariant } from "@/lib/types";
 
 export const site = {
   name: "Ananya Shah",
-  tagline: "curiouser, curiouser",
+  tagline: "passionate builder, currently professionally telling stories with data",
   url: "https://ananya-personal.netlify.app",
   locale: "en_US",
   description:
-    "Ananya Shah builds products and the communities around them. Founder, engineer and analyst working across LLM tooling, telecom reliability analytics and the Boston AI scene.",
+    "passionate builder, currently professionally telling stories with data",
 } as const;
-
-/**
- * DRAFT COPY. Written in Ananya's voice, not approved. Every string in this
- * file is meant to be argued with. Swap the tagline by changing site.tagline
- * above, or pick one of the alternates below.
- */
-export const taglineOptions = [
-  "curiouser, curiouser", // selected
-  "I put 110% into everything. Especially the things that don't require it.",
-  "I build products, and the communities that carry them.",
-  "Depth in a lot of places at once.",
-] as const;
-
-/** DRAFT. Three lines, homepage, under the wordmark. */
-export const bio: string[] = [
-  "I build things and the communities around them, usually two or three at once.",
-  "Right now that means an LLM talent matching engine, reliability analytics for a telecom network, and the AI Collective in Boston.",
-  "I have been doing some version of this since 2018, which is why my timeline starts there and not at graduation.",
-];
 
 /**
  * In-page anchors, not routes. The site is one scrolling page (T-G.1), so nav
@@ -54,25 +35,13 @@ export const contact = {
   github: "https://github.com/Anyueow",
 } as const;
 
-/** TODO: drop the three PDFs into /public/resume and fix the labels. */
+/** One general resume. Add the supplied PDF at this path when available. */
 export const resumes: ResumeVariant[] = [
   {
-    id: "product",
-    label: "Product and engineering",
-    description: "For engineering and product roles.",
-    file: "/resume/ananya-shah-product.pdf",
-  },
-  {
-    id: "data",
-    label: "Data and analytics",
-    description: "For analytics and data science roles.",
-    file: "/resume/ananya-shah-data.pdf",
-  },
-  {
-    id: "founder",
-    label: "Founder and strategy",
-    description: "For venture, strategy and founding roles.",
-    file: "/resume/ananya-shah-founder.pdf",
+    id: "resume",
+    label: "Download resume",
+    description: "",
+    file: "/resume/ananya-shah.pdf",
   },
 ];
 

@@ -329,10 +329,16 @@ Verification: production build, ESLint and TypeScript pass. Browser interactions
 
 ## T-G.15: Simple description and single resume
 
-Status: IN PROGRESS. Owner: Codex.
+Status: DONE. Owner: Codex.
 
 Ananya, verbatim: "And also the weird subtitle that says \"in Boston builder since 2018\": don't need any of that. Also remove \"curiouser and curiouser.\" My description should just say: passionate builder, currently professionally telling stories with data"
 
 Additional request, verbatim: "Also just have a single resume. I don't want three multiple resumes"
 
 Use her exact sentence as the hero and metadata description, remove the old introductory bio, and expose one general resume slot. No resume PDF exists in public/ yet. Working from a fresh clone because the Desktop checkout's Git pack could not be read reliably.
+
+Additional request: shorten and sharpen the welcome modal around two truths and a lie, collecting objects and red herrings. User: "Make it more intelligible, shorter, concise, and sharp". Use one short paragraph with Play the game / Just browse actions.
+
+Additional request: replace Experiences opening verbatim with: "I've always been actively involved and passionate about everything that I do. One thing that I've been accused of is putting my 110% into everything, even things that may not require it. This is why my experience starts all the way from a little bit before high school to now, so you see the full picture if you want!"
+
+T-G.15 complete: hero uses the exact supplied description, obsolete location/building-since line and old tagline/bio removed, metadata uses the new description. One general resume slot points to /resume/ananya-shah.pdf (not supplied yet). Welcome reduced to one paragraph and Play the game / Just browse buttons. Experiences opening uses Ananya's latest exact text. Build, lint and TypeScript pass; welcome and hero inspected at 390px and 1440px; one unavailable resume slot verified. Netlify configuration unchanged.

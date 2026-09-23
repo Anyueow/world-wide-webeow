@@ -1,10 +1,9 @@
-/** Welcome text supplied by Ananya for T-G.13. */
+/** Concise welcome copy requested by Ananya for T-G.15. */
 export const gameWelcome = {
-  title: "Hi, my name is Ananya",
-  introduction: "Hi, my name is Ananya and this is a personal website about me. There is a quick game scattered throughout the website if you want to learn more about me. It's essentially collecting objects that help you get to know me better.",
-  choice: "If you don't want to participate and just want a clean look at my website, you can click here and say, 'I don't want to play a game.' All the animated objects throughout the website will be removed.",
-  participate: "I want to participate",
-  decline: "I don't want to participate",
+  title: "Hi, I’m Ananya.",
+  introduction: "Get to know me through a quick game of two truths and a lie. Collect objects scattered across the site to discover facts about me. Watch out for red herrings.",
+  participate: "Play the game",
+  decline: "Just browse",
   turnOn: "Turn on game",
   turnOff: "Turn off game",
 } as const;
